@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -55,7 +56,8 @@ ROOT_URLCONF = 'DiagramChaseDatabase.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(folder, 'templates') for folder in 
+                 ('DiagramChaseDatabase', 'cd_editor')],
         'APP_DIRS': True,
         'OPTIONS': {
             'debug': True,
