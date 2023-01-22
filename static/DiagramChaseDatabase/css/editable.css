@@ -1,0 +1,8 @@
+.editable-text:hover > .editable-text-button {
+  opacity: 1;
+}
+
+.editable-text-button {
+  opacity: 0;
+}
+

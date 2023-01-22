@@ -1,0 +1,9 @@
+.btn {
+  --bs-btn-border-radius: 0.575rem;
+}
+
+.editable-text-button {
+  --bs-btn-border-radius: 0.175rem;
+  margin: 8px;
+}
+
