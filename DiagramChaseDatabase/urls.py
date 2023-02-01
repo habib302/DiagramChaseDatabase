@@ -17,9 +17,13 @@ from django.contrib import admin
 from django.urls import path
 from .views import index
 from cd_editor.views import cd_editor
+from django.views.generic.base import TemplateView
+from database.views import test_memgraph
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index),
-    path('cd-editor/', cd_editor)
+    path('cd_editor/', cd_editor),
+    path('cd_editor/quiver_editor.html', TemplateView.as_view(template_name="quiver_editor.html")),
+    path('database/', test_memgraph)
 ]

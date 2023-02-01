@@ -10,16 +10,17 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css?family=Indie+Flower&amp;display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic&amp;display=swap" rel="stylesheet"/>
+  <link href='{% static "cd_editor\css\main.css" %}' rel="stylesheet"/>
   <link href='{% static "DiagramChaseDatabase\css\editable.css" %}' rel="stylesheet"/>
   <link href='{% static "DiagramChaseDatabase\css\styles.css" %}' rel="stylesheet"/>
  </head>
- <body>
-  <nav class="navbar navbar-light navbar-expand-lg navigation-clean-button" style="/*position: absolute;*/width: 100%;height: auto;max-height: auto;padding: 0px;">
-   <div class="container">
+ <body class="align-items-center">
+  <nav class="navbar navbar-light navbar-expand-lg sticky-top navigation-clean-button" style="/*position: absolute;*/width: 100%;height: auto;max-height: auto;padding: 0px;">
+   <div class="container-fluid">
     <a class="navbar-brand" href="/" style="font-family: 'Indie Flower', serif;color: var(--bs-indigo);font-size: xx-large;font-weight: bold;margin: 0px;padding: 0px;">
-     DiagramChaseDatabase
+     DCDb
     </a>
-    <button class="navbar-toggler" data-bs-target="#navcol-1" data-bs-toggle="collapse" style="transform: scale(0.74);">
+    <button class="navbar-toggler d-inline-flex float-none justify-content-end align-items-start" data-bs-target="#navcol-1" data-bs-toggle="collapse" style="transform: scale(0.74);">
      <span class="visually-hidden">
       Toggle navigation
      </span>
@@ -44,13 +45,7 @@
     </div>
    </div>
   </nav>
-  <div class="container d-flex d-lg-flex align-items-center justify-content-lg-center align-items-lg-center editable-text">
-   <h1 id="diagram-name-text" style="display: block;text-align: center;">
-    {{diagram.name}}
-    My $R$-module diagram
-   </h1>
-   <button class="btn btn-primary editable-text-button" data-bs-target="#diagram-name-modal" data-bs-toggle="modal" id="diagram-name-edit-button" style='background: url({% static "DiagramChaseDatabase\img\blue-pencil-icon.png" %}) top right / cover no-repeat, #00000000;border-style: none;width: 32px;height: 32px;' type="button">
-   </button>
+  <div class="container-fluid text-center d-inline d-md-flex d-lg-flex align-items-center justify-content-md-center align-items-md-center justify-content-lg-center align-items-lg-center editable-text" style="padding: 0;">
    <div class="modal fade editable-text-modal" id="diagram-name-modal" role="dialog" style="margin-top: 10%;" tabindex="-1">
     <div class="modal-dialog modal-lg" role="document">
      <div class="modal-content">
@@ -74,10 +69,32 @@
      </div>
     </div>
    </div>
+   <h2 class="d-grid float-none d-md-flex justify-content-md-center align-items-md-start" id="diagram-name-text" style="display: block;text-align: center;margin: 0;margin-top: 0;">
+    {{diagram.name}}
+    My $R$-module diagram
+   </h2>
+   <button class="btn btn-primary align-items-md-center editable-text-button" data-bs-target="#diagram-name-modal" data-bs-toggle="modal" id="diagram-name-edit-button" style='background: url({% static "DiagramChaseDatabase\img\blue-pencil-icon.png" %}) top right / cover no-repeat, #00000000;border-style: none;width: 32px;height: 32px;' type="button">
+   </button>
+  </div>
+  <div class="container d-grid d-md-flex justify-content-md-center align-items-md-center" style="width: 100%;height: 80%;padding: 0;">
+   <iframe id="quiver-editor" src='{% url "cd_editor\quiver_editor.html" %}'>
+   </iframe>
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js">
   </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js">
+  </script>
+  <script src='{% static "cd_editor\js\arrow.js" %}'>
+  </script>
+  <script src='{% static "cd_editor\js\bezier.js" %}'>
+  </script>
+  <script src='{% static "cd_editor\js\dom.js" %}'>
+  </script>
+  <script src='{% static "cd_editor\js\ds.js" %}'>
+  </script>
+  <script src='{% static "cd_editor\js\quiver.js" %}'>
+  </script>
+  <script src='{% static "cd_editor\js\ui.js" %}'>
   </script>
   <script src='{% static "DiagramChaseDatabase\js\editable.js" %}'>
   </script>

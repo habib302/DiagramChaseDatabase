@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'cd_editor.apps.CdEditorConfig',
+    'database.apps.DatabaseConfig',
 ]
 
 MIDDLEWARE = [
@@ -129,3 +130,8 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR,'static')]
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+
+
+MAX_LATEX_LENGTH=64

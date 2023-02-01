@@ -29,7 +29,10 @@ proj.directory-list = [{'dirloc': loc('.'),
                         'recursive': True,
                         'watch_for_changes': True}]
 proj.file-type = 'shared'
-proj.launch-config = {loc('manage.py'): ('custom',
+proj.launch-config = {loc('database/memgraph_conn.py'): ('project',
+        ('',
+         'launch-K6A8CrNeEIvxI9X9')),
+                      loc('manage.py'): ('custom',
         ('',
          'launch-K6A8CrNeEIvxI9X9'))}
 proj.main-file = loc('manage.py')
