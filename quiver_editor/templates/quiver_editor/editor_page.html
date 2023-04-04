@@ -1,0 +1,153 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <link as="image" href='{% static "quiver-blue.svg" %}' rel="preload"/>
+  <link as="image" href='{% static "quiver_editor/icons/about.svg" %}' rel="preload"/>
+  <link as="image" href='{% static "quiver_editor/icons/centre-view.svg" %}' rel="preload"/>
+  <link as="image" href='{% static "quiver_editor/icons/delete.svg" %}' rel="preload"/>
+  <link as="image" href='{% static "quiver_editor/icons/deselect-all.svg" %}' rel="preload"/>
+  <link as="image" href='{% static "quiver_editor/icons/hide-grid.svg" %}' rel="preload"/>
+  <link as="image" href='{% static "quiver_editor/icons/redo.svg" %}' rel="preload"/>
+  <link as="image" href='{% static "quiver_editor/icons/reset-zoom.svg" %}' rel="preload"/>
+  <link as="image" href='{% static "quiver_editor/icons/save.svg" %}' rel="preload"/>
+  <link as="image" href='{% static "quiver_editor/icons/select-all.svg" %}' rel="preload"/>
+  <link as="image" href='{% static "quiver_editor/icons/shortcuts.svg" %}' rel="preload"/>
+  <link as="image" href='{% static "quiver_editor/icons/show-hints.svg" %}' rel="preload"/>
+  <link as="image" href='{% static "quiver_editor/icons/show-queue.svg" %}' rel="preload"/>
+  <link as="image" href='{% static "quiver_editor/icons/undo.svg" %}' rel="preload"/>
+  <link as="image" href='{% static "quiver_editor/icons/zoom-in.svg" %}' rel="preload"/>
+  <link as="image" href='{% static "quiver_editor/icons/zoom-out.svg" %}' rel="preload"/>
+  <!-- Style sheets and scripts -->
+  <link href='{% static "quiver_editor/main.css" %}' media="screen" rel="stylesheet" type="text/css"/>
+  <script src='{% static "quiver_editor/ds.js" %}' type="text/javascript">
+  </script>
+  <script src='{% static "quiver_editor/dom.js" %}' type="text/javascript">
+  </script>
+  <script src='{% static "quiver_editor/quiver.js" %}' type="text/javascript">
+  </script>
+  <script src='{% static "quiver_editor/bezier.js" %}' type="text/javascript">
+  </script>
+  <script src='{% static "quiver_editor/arrow.js" %}' type="text/javascript">
+  </script>
+  <script src='{% static "quiver_editor/ui.js" %}' type="text/javascript">
+  </script>
+  <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport"/>
+  <title>
+   DiagramChaseDatabase
+  </title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css?family=Indie+Flower&amp;display=swap" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" rel="stylesheet"/>
+  <link href='{% static "css/Navbar-Centered-Brand-icons.css" %}' rel="stylesheet"/>
+ </head>
+ <body>
+  <nav class="navbar navbar-light navbar-expand-md py-3">
+   <div class="container">
+    <a class="navbar-brand d-flex align-items-center" href='{% static "#" %}'>
+     <span class="bounce animated" style="font-family: 'Indie Flower', serif;color: var(--bs-indigo);font-size: 24px;font-weight: bold;">
+      Diagram Chase Database
+     </span>
+    </a>
+    <button class="navbar-toggler" data-bs-target="#navcol-4" data-bs-toggle="collapse">
+     <span class="visually-hidden">
+      Toggle navigation
+     </span>
+     <span class="navbar-toggler-icon">
+     </span>
+    </button>
+    <div class="collapse navbar-collapse flex-grow-0 order-md-first" id="navcol-4">
+     <ul class="navbar-nav me-auto">
+      <li class="nav-item">
+      </li>
+      <li class="nav-item">
+      </li>
+     </ul>
+     <div class="d-md-none my-2">
+      <button class="btn btn-light me-2" type="button">
+       Sign Out
+      </button>
+     </div>
+    </div>
+    <div class="d-none d-md-block">
+     <button class="btn btn-light me-2" type="button">
+      Sign Out
+     </button>
+    </div>
+   </div>
+  </nav>
+  <a href="https://github.com/varkor/quiver" id="logo-link" target="_blank">
+   <img class="logo" src='{% static "quiver_editor/img/quiver.svg" %}'/>
+  </a>
+  <noscript>
+   JavaScript must be enabled to use quiver.
+  </noscript>
+  <script>
+   // If we are loading a diagram, display a loading screen to prevent a flash of empty canvas.
+        // We do this in a `<script>` tag here to make sure that it loads immediately.
+        const query_data = query_parameters();
+
+        // If we're running in embedded view, update the logo so that clicking it opens the
+        // the current diagram in the app.
+        if (query_data.has("embed")) {
+            // If the `embed` query parameter is present, we'll automatically switch to
+            // `UIMode.Embedded` in `ui.js`, which will add the `embedded` class to the body.
+            // However, we pre-empt this here by adding `embedded` immediately upon loading, so
+            // that the `loading_screen` will have the correct CSS applied from the start.
+            document.body.classList.add("embedded");
+
+            document.querySelector("#logo-link").href = reconstruct_URL(query_data, [
+                "embed",
+                "scale",
+            ]);
+        }
+
+        if (query_data.has("q")) {
+            // Prevent keyboard events effected during loading from taking place after loading
+            // has completed.
+            document.addEventListener("keydown", cancel);
+            document.addEventListener("keyup", cancel);
+
+            const loading_screen = new DOM.Div({ class: "loading-screen" })
+                .add(new DOM.Element("img", { src: "quiver_editor/quiver-blue.svg", class: "logo" }))
+                .add(new DOM.Element("span").add("Loading diagram..."))
+                // Prevent pointer events effected during loading from taking place after loading
+                // has completed.
+                .listen(pointer_event("down"), cancel)
+                .listen(pointer_event("move"), cancel)
+                .listen(pointer_event("up"), cancel)
+                .listen("wheel", cancel, { passive: true });
+            document.body.appendChild(loading_screen.element);
+        }
+
+        // Takes a `Map` containing a collection of query parameters and reconstructs a
+        // corresponding URL. An array containing parameters to `ignore` is used to delete unwanted
+        // query parameters.
+        function reconstruct_URL(query_data, ignore) {
+            const URL_prefix = window.location.href.replace(/\?.*$/, "?");
+            return Array.from(query_data.entries())
+                .filter(([key,]) => !ignore.includes(key))
+                .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
+                .reduce((acc, x) => `${acc}&${x}`, URL_prefix);
+        }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js">
+  </script>
+  <script src='{% static "js/bs-init.js" %}'>
+  </script>
+  <script src='{% static "quiver_editor/js/arrow.js" %}'>
+  </script>
+  <script src='{% static "quiver_editor/js/bezier.js" %}'>
+  </script>
+  <script src='{% static "quiver_editor/js/dom.js" %}'>
+  </script>
+  <script src='{% static "quiver_editor/js/ds.js" %}'>
+  </script>
+  <script src='{% static "quiver_editor/js/quiver.js" %}'>
+  </script>
+  <script src='{% static "quiver_editor/js/ui.js" %}'>
+  </script>
+ </body>
+</html>

@@ -1,0 +1,41 @@
+{% extends 'bootstrap.html' %}
+
+{% load django_bootstrap5 %}
+{% load static %}
+
+{% block bootstrap5_content %}
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'home' %}" style="display:flex">
+              <span>
+                <img src="{% static 'img/app-logo.svg' %}" alt="Diagram Chase Database logo" height="90">
+              </span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link" href="{% url 'formset_default' %}">formset</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'form_default' %}">form</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'form_by_field' %}">form_by_field</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'form_horizontal' %}">form_horizontal</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'form_inline' %}">form_inline</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'form_with_files' %}">form_with_files</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'pagination' %}">pagination</a></li>
+              </ul>
+              <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+        {% autoescape off %}{% bootstrap_messages %}{% endautoescape %}
+
+        {% block content %}(no content){% endblock %}
+    </div>
+
+{% endblock %}

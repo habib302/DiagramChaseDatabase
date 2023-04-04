@@ -5,7 +5,7 @@
 ##################################################################
 [project attributes]
 debug.launch-configs = (2,
-                        {'launch-9vdZwo8w86ub5hFe': ({},
+                        {'launch-JOuwzUXuuMTltPQ6': ({},
         {'buildcmd': ('project',
                       ('',
                        '')),
@@ -27,17 +27,14 @@ proj.directory-list = [{'dirloc': loc('.'),
                         'filter': '*',
                         'include_hidden': False,
                         'recursive': True,
-                        'watch_for_changes': True},
-                       {'dirloc': loc('quiver_editor/templates'),
-                        'excludes': (),
-                        'filter': '*',
-                        'include_hidden': False,
-                        'recursive': True,
                         'watch_for_changes': True}]
 proj.file-type = 'shared'
-proj.launch-config = {loc('manage.py'): ('custom',
+proj.launch-config = {loc('database_app/memgraph_test.py'): ('project',
         ('',
-         'launch-9vdZwo8w86ub5hFe'))}
+         'launch-JOuwzUXuuMTltPQ6')),
+                      loc('manage.py'): ('custom',
+        ('',
+         'launch-JOuwzUXuuMTltPQ6'))}
 proj.main-file = loc('manage.py')
 testing.test-framework = {None: ':internal djangotest',
                           loc('manage.py'): ':internal djangotest'}
