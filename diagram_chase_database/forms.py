@@ -1,8 +1,8 @@
 from django import forms
 from django.contrib.admin.widgets import AdminSplitDateTime
 from django.forms import BaseFormSet, TextInput, formset_factory
-
 from django_bootstrap5.widgets import RadioSelectButtonGroup
+from django.contrib.auth.forms import PasswordResetForm
 
 RADIO_CHOICES = (("1", "Radio 1"), ("2", "Radio 2"))
 
@@ -101,3 +101,15 @@ class ArticleForm(forms.Form):
         cleaned_data = super().clean()
         raise forms.ValidationError("This error was added to show the non field errors styling.")
         return cleaned_data
+    
+    
+class UserPasswordResetForm(PasswordResetForm):
+    def __init__(self, *args, **kwargs):
+        super(UserPasswordResetForm, self).__init__(*args, **kwargs)
+
+    email = forms.EmailField(label='', widget=forms.EmailInput(attrs={
+        'class': 'your class',
+        'placeholder': 'your placeholder',
+        'type': 'email',
+        'name': 'email'
+    }))

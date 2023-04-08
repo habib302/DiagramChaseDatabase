@@ -4,7 +4,7 @@ from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db.models.fields.files import FieldFile
 from django.views.generic import FormView
 from django.views.generic.base import TemplateView
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import ContactForm, ContactFormSet, FilesForm
 
 
@@ -90,3 +90,8 @@ class PaginationView(TemplateView):
 
 class MiscView(TemplateView):
    template_name = "app/misc.html"
+   
+    
+   
+class CDEditorView(LoginRequiredMixin, TemplateView):
+   template_name = "app/cd_editor.html"

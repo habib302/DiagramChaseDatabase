@@ -3,7 +3,7 @@
 {% load django_bootstrap5 %}
 
 {% block bootstrap5_content %}
-    <div class="container">        
+    <div class="container-fluid" style="max-width=100%">        
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
           <a class="navbar-brand" href="#">Diagram Chase DB</a>
@@ -61,7 +61,9 @@
       
       {% autoescape off %}{% bootstrap_messages %}{% endautoescape %}
 
-      {% block content %}(no content){% endblock %}
+      {% block content %}
+        (no content)
+      {% endblock %}
   </div>  
 
 {% endblock %}

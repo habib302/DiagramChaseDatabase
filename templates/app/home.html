@@ -2,5 +2,9 @@
 {% load django_bootstrap5 %}
 
 {% block content %}
-    This is <em>bootstrap5</em> for <strong>Django</strong>.
+  {% if user.is_authenticated %}
+    <a class="btn btn-primary" type="button" href="{% url 'cd_editor' %}" style="margin:8px">
+      CD Editor
+    </a>
+  {% endif %}
 {% endblock %}

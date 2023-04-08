@@ -1,0 +1,7 @@
+{% extends 'app/base.html' %}
+{% load django_bootstrap5 %}
+{% load static %}
+
+{% block content %}
+   <iframe id="serviceFrameSend" src="{% static 'quiver/src/index.html' %}" style="width:98vw;height:89vh;" frameborder="0">
+{% endblock %}
