@@ -15,7 +15,6 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include 
-from homepage.views import homepage
 
 from .views import (
     DefaultFormByFieldView,
@@ -31,9 +30,8 @@ from .views import (
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("accounts/", include("django.contrib.auth.urls")),  # new    
-    #path("", HomePageView.as_view(), name="home"),
-    path("", homepage, name="homepage"),
+    path("accounts/", include("django.contrib.auth.urls")), 
+    path("", HomePageView.as_view(), name="home"),
     path("formset", DefaultFormsetView.as_view(), name="formset_default"),
     path("form", DefaultFormView.as_view(), name="form_default"),
     path("form_by_field", DefaultFormByFieldView.as_view(), name="form_by_field"),

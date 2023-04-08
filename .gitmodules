@@ -1,3 +1,0 @@
-[submodule "static/cd_editor/quiver"]
-	path = static/cd_editor/js/quiver
-	url = https://github.com/varkor/quiver.git

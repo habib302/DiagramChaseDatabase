@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'database_app.apps.DatabaseAppConfig',
     'django_bootstrap5', 
-    'homepage.apps.HomepageConfig',
 ]
 
 MIDDLEWARE = [
