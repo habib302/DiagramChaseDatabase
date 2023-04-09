@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'database_app.apps.DatabaseAppConfig',
-    'django_bootstrap5', 
+    'bootstrap5',
 ]
 
 MIDDLEWARE = [
@@ -129,13 +129,6 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# Settings for django-bootstrap5
-BOOTSTRAP5 = {
-    "error_css_class": "django_bootstrap5-error",
-    "required_css_class": "django_bootstrap5-required",
-    "javascript_in_head": True,
-}
 
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"

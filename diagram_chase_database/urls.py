@@ -41,5 +41,5 @@ urlpatterns = [
     path("form_with_files", FormWithFilesView.as_view(), name="form_with_files"),
     path("pagination", PaginationView.as_view(), name="pagination"),
     path("misc", MiscView.as_view(), name="misc"),
-    path("cd_editor", CDEditorView.as_view(), name="cd_editor"),
+    path("diagram_editor", CDEditorView.as_view(), name="diagram_editor"),
 ]

@@ -17,7 +17,7 @@ fieldfile = FieldFile(None, FakeField, "dummy.txt")
 
 
 class HomePageView(TemplateView):
-   template_name = "app/home.html"
+   template_name = "diagram_chase_database/home.html"
 
    def get_context_data(self, **kwargs):
       context = super().get_context_data(**kwargs)
@@ -94,4 +94,9 @@ class MiscView(TemplateView):
     
    
 class CDEditorView(LoginRequiredMixin, TemplateView):
-   template_name = "app/cd_editor.html"
+   template_name = "diagram_chase_database/diagram_editor.html"
+   
+   def get_context_data(self, **kwargs):
+      context = super().get_context_data(**kwargs)
+      messages.success(self.request, "Welcome to the Commutative Diagram Editor!")
+      return context   
