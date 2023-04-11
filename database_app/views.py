@@ -19,7 +19,6 @@ def load_diagram_from_database(request, diagram_id):
          diagram = get_model_by_uid(Diagram, uid=diagram_id)
          json_str = json.dumps(diagram.quiver_format())
          
-         messages.success(request, f'🌩️ Successfully loaded diagram (id={diagram.uid}) from the database!')
          return HttpResponse(json_str, content_type='text/plain; charset=utf8')
       
    except Exception as e:
@@ -119,6 +118,7 @@ def diagram_editor(request, diagram_id:str):
          'commutes_text' : diagram.commutes_text,
       }
 
+      messages.success(request, f'🌩️ Successfully loaded diagram (id={diagram.uid}) from the database!')
       return render(request, 'database_app/diagram_editor.html', context)  
 
    except Exception as e:
