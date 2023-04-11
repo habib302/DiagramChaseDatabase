@@ -3,9 +3,10 @@ from django.core.files.storage import default_storage
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db.models.fields.files import FieldFile
 from django.views.generic import FormView
-from django.views.generic.base import TemplateView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic.base import TemplateView, View
+from django.contrib.auth.decorators import login_required
 from .forms import ContactForm, ContactFormSet, FilesForm
+from django.shortcuts import render
 
 
 # http://yuji.wordpress.com/2013/01/30/django-form-field-in-initial-data-requires-a-fieldfile-instance/
@@ -89,14 +90,11 @@ class PaginationView(TemplateView):
 
 
 class MiscView(TemplateView):
-   template_name = "app/misc.html"
-   
-    
-   
-class CDEditorView(LoginRequiredMixin, TemplateView):
-   template_name = "diagram_chase_database/diagram_editor.html"
-   
-   def get_context_data(self, **kwargs):
-      context = super().get_context_data(**kwargs)
-      messages.success(self.request, "Welcome to the Commutative Diagram Editor!")
-      return context   
+   template_name = "app/misc.html"   
+
+
+class MessagesView(View):
+   template_name = 'diagram_chase_database/messages.html'
+
+   def get(self, request, *args, **kwargs):
+      return render(request, self.template_name)

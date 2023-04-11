@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include 
+import database_app.views as db_views
 
 from .views import (
     DefaultFormByFieldView,
@@ -26,7 +27,7 @@ from .views import (
     HomePageView,
     MiscView,
     PaginationView,
-    CDEditorView,
+    MessagesView,
 )
 
 urlpatterns = [
@@ -41,5 +42,9 @@ urlpatterns = [
     path("form_with_files", FormWithFilesView.as_view(), name="form_with_files"),
     path("pagination", PaginationView.as_view(), name="pagination"),
     path("misc", MiscView.as_view(), name="misc"),
-    path("diagram_editor", CDEditorView.as_view(), name="diagram_editor"),
+    path("diagram_editor/<str:diagram_id>", db_views.diagram_editor, name="diagram_editor"),
+    path("save_diagram/<str:diagram_id>", db_views.save_diagram_to_database, name="save_diagram"),
+    path("load_diagram/<str:diagram_id>", db_views.load_diagram_from_database, name="load_diagram"),
+    path("new_diagram", db_views.create_new_diagram, name="new_diagram"),
+    path("messages", MessagesView.as_view(), name='messages'),
 ]

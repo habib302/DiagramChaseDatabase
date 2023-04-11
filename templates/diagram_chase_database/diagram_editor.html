@@ -79,12 +79,27 @@
    </div>
   </div>
   <div class="container-fluid" style="padding: 0;">
-   <button class="btn btn-primary d-flex" data-bs-target="#offcanvas-1" data-bs-toggle="offcanvas" style="position: absolute;bottom: 2%;z-index: 1;margin-left: 8px;" type="button">
-    Math
-   </button>
+   <div class="btn-group" role="group" style="bottom: 2%;margin-left: 8px;position: absolute;z-index: 1;">
+    <button class="btn btn-primary" data-bs-target="#offcanvas-1" data-bs-toggle="offcanvas" type="button">
+     Math
+    </button>
+    <button class="btn btn-primary" id="save-button" type="button">
+     Save
+    </button>
+   </div>
    <iframe src='{% static "quiver/src/index.html" %}' style="margin-left: 10px;width: 98.5vw;height: 93.5vh;position: relative;display: flex;" title="Quiver Diagram Editor">
    </iframe>
   </div>
+  <script src='{% static "js/quiver_interface.js" %}'>
+  </script>
+  <script type="text/javascript">
+   $(document).ready(function()
+    {
+        $('#save-button').click(() => {
+            save_diagram_to_database("{% url 'save_diagram' diagram_id %}");
+        });
+    });
+  </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js">
   </script>
   <script src='{% static "js/bs-init.js" %}'>

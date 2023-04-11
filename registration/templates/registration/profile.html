@@ -18,7 +18,7 @@
  <body>
   <nav class="navbar navbar-dark navbar-expand-md bg-dark py-1">
    <div class="container">
-    <a class="navbar-brand d-flex align-items-center" href='{% static "#" %}'>
+    <a class="navbar-brand d-flex align-items-center" href='{% static "home.html" %}'>
      <span class="bounce animated" style="color: var(--bs-cyan);font-family: 'Indie Flower', serif;font-size: 30px;">
       Diagram Chase Database
      </span>
@@ -49,61 +49,24 @@
        Log Out
       </a>
       {% endif %}
-      {% if not user.is_authenticated %}
-      <a class="btn btn-primary" href='{% url "login" %}' role="button">
-       Log In
-      </a>
-      {% endif %}
      </div>
     </div>
     <div class="d-none d-md-block">
-     {% if not user.is_authenticated %}
-     <a class="btn btn-primary" href='{% url "login" %}' role="button">
-      Sign Up!
+     {% if user.is_authenticated %}
+     <a class="btn btn-light me-2" href='{% url "logout" %}' role="button">
+      Log Out
      </a>
      {% endif %}
     </div>
    </div>
   </nav>
-  {% load bootstrap5 %}
-{% autoescape off %}{% bootstrap_messages %}{% endautoescape %}
-  <section class="py-4 py-xl-5">
-   <div class="container">
-    <div class="row mb-5">
-     <div class="col-md-8 col-xl-6 text-center mx-auto">
-      <h2>
-       Log in
-      </h2>
-      <p>
-       Please log into your account if you'd like to edit and save diagrams to the database.
-      </p>
-     </div>
-    </div>
-    <div class="row d-flex justify-content-center">
-     <div class="col-md-6 col-xl-4">
-      <div class="card mb-5">
-       <div class="card-body d-flex flex-column align-items-center">
-        <div class="bs-icon-xl bs-icon-circle bs-icon-primary bs-icon my-4">
-         <svg class="bi bi-person" fill="currentColor" height="1em" viewbox="0 0 16 16" width="1em" xmlns="http://www.w3.org/2000/svg">
-          <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z">
-          </path>
-         </svg>
-        </div>
-        <form class="text-center" method="post">
-         {% csrf_token %}
-{{ form.as_p }}
-         <div>
-          <button class="btn btn-primary" type="submit">
-           Log In
-          </button>
-         </div>
-        </form>
-       </div>
-      </div>
-     </div>
-    </div>
-   </div>
-  </section>
+  <div class="container" style="padding-top: 25px;">
+   {% if user.is_authenticated %}
+   <a class="btn btn-primary" href='{% static "diagram_editor.html" %}'>
+    My Diagrams
+   </a>
+   {% endif %}
+  </div>
   <script src='{% static "js/jquery.min.js" %}'>
   </script>
   <script src='{% static "bootstrap/js/bootstrap.min.js" %}'>
