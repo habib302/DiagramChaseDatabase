@@ -19,7 +19,7 @@
  <body>
   <nav class="navbar navbar-dark navbar-expand-md bg-dark py-1">
    <div class="container">
-    <a class="navbar-brand d-flex align-items-center" href='{% url "home" %}'>
+    <a class="navbar-brand d-flex align-items-center" href='{% static "home.html" %}'>
      <span class="bounce animated" style="color: var(--bs-cyan);font-family: 'Indie Flower', serif;font-size: 30px;">
       Diagram Chase Database
      </span>
@@ -71,20 +71,9 @@
     </div>
    </div>
   </nav>
-  {% load bootstrap5 %}
-{% autoescape off %}{% bootstrap_messages %}{% endautoescape %}
-  <div class="container" style="padding-top: 25px;">
-   {% if user.is_authenticated %}
-   <a class="btn btn-primary" href='{% url "new_diagram" %}'>
-    New Diagram
-   </a>
-   {% endif %}
-   {% if user.is_authenticated %}
-   <a class="btn btn-primary" href='{% url "new_diagram" %}' style="margin-left: 8px;">
-    My Diagrams
-   </a>
-   {% endif %}
-  </div>
+  <h1>
+   My Diagrams
+  </h1>
   <script src='{% static "js/jquery.min.js" %}'>
   </script>
   <script src='{% static "bootstrap/js/bootstrap.min.js" %}'>

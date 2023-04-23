@@ -4,7 +4,7 @@ djangoMessagesDiv = null;
 djangoMessagesURL = null;
 
 function load_html_from_url(url, elem) {
-    elem.load(url);
+    elem.load(url)
 }
 
 function display_django_messages() {

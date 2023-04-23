@@ -3,13 +3,14 @@ from .models import Object, Category, Diagram, get_model_by_uid, get_model_class
 from diagram_chase_database.http_tools import get_posted_text
 from django.http import JsonResponse
 from diagram_chase_database.python_tools import full_qualname
-import json
 from django.db import OperationalError
 from django.core.exceptions import ObjectDoesNotExist
 from diagram_chase_database.settings import DEBUG, MAX_USER_EDIT_DIAGRAMS
 from neomodel.properties import StringProperty
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+import base64
+import json
 
 # Create your views here.
 
@@ -72,7 +73,21 @@ def test(request):
 
 def diagram_list(request):
    from django.shortcuts import render
-   return render(request, "database_app/diagram_list.html")
+   
+   diagrams = Diagram.nodes.filter(checked_out_by=request.user.username)
+   
+   for diagram in diagrams:
+      diagram:Diagram
+      data = diagram.quiver_format()
+      data = json.dumps(data)
+      data = base64.b64encode(data.encode('utf-8'))
+      diagram.embed_data = data
+      
+   context = {
+      'diagrams': diagrams,
+   }
+   
+   return render(request, "database_app/diagram_list.html", context)
 
 
 @login_required
@@ -123,12 +138,12 @@ def diagram_editor(request, diagram_id:str):
 
    except Exception as e:
       messages.error(request, f'{full_qualname(e)}: {str(e)}')   
-      redirect('home')
+      return redirect('home')
 
 
 @login_required
 def create_new_diagram(request):   
-   diagram = get_unique(Diagram, name="Untitled Diagram")   
+   diagram = Diagram.our_create(name="Untitled Diagram")
    diagram.checked_out_by = request.user.username
    diagram.save()
    return redirect('diagram_editor', diagram.uid)

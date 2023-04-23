@@ -2,3 +2,10 @@
   margin-bottom: 0;
 }
 
+.diagram-list-quiver-embed {
+  border: 2px solid var(--bs-blue);
+  width: auto;
+  height: 200px;
+  border-radius: 15px;
+}
+

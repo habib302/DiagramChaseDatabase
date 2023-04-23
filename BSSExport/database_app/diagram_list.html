@@ -6,20 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>DiagramChaseDatabase</title>
     <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&amp;display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Indie+Flower&amp;display=swap">
+    <link rel="stylesheet" href="/assets/css/Articles-Cards-images.css">
     <link rel="stylesheet" href="/assets/css/Editable-Text.css">
     <link rel="stylesheet" href="/assets/css/Navbar-Centered-Brand-Dark-icons.css">
     <link rel="stylesheet" href="/assets/css/styles.css">
 </head>
 
 <body>
-    <ul>
-        <li>Item 1</li>
-        <li>Item 2</li>
-        <li>Item 3</li>
-        <li>Item 4</li>
-    </ul>
+    <div class="card" dj-for="diagram in diagrams" style="margin: 4px;">
+        <div class="card-body diagram-list-item-body">
+            <h4 class="card-title" dj-ref="diagram.name"></h4>
+            <p class="card-text" dj-ref="diagram.checked_out_by">Additional information</p>
+            <div class="diagram-screenshot"><iframe class="quiver-embed diagram-list-quiver-embed" src="https://q.uiver.app?q={{ diagram.embed_data }}&embed"></iframe>
+
+</div>
+        </div>
+    </div>
     <script src="/assets/js/jquery.min.js"></script>
     <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="/assets/js/bs-init.js"></script>

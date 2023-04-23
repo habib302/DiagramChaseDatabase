@@ -16,7 +16,7 @@
 
 <body>
     <nav class="navbar navbar-dark navbar-expand-md bg-dark py-1">
-        <div class="container"><a class="navbar-brand d-flex align-items-center" href="/diagram_chase_database/home.html"><span class="bounce animated" style="color: var(--bs-cyan);font-family: 'Indie Flower', serif;font-size: 30px;">Diagram Chase Database</span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-6"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+        <div class="container"><a class="navbar-brand d-flex align-items-center" href="home.html"><span class="bounce animated" style="color: var(--bs-cyan);font-family: 'Indie Flower', serif;font-size: 30px;">Diagram Chase Database</span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-6"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse flex-grow-0 order-md-first" id="navcol-6">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item"><a class="nav-link active" href="https://github.com/enjoysmath/DiagramChaseDatabase">Source Code</a></li>
@@ -26,9 +26,8 @@
             </div>
             <div class="d-none d-md-block"><a class="btn btn-light me-2" role="button" href="/registration/logout.html" dj-if="user.is_authenticated">Log Out</a><a class="btn btn-primary" role="button" href="/registration/login.html" dj-if="not user.is_authenticated">Log In</a></div>
         </div>
-    </nav>{% load bootstrap5 %}
-{% autoescape off %}{% bootstrap_messages %}{% endautoescape %}
-    <div class="container" style="padding-top: 25px;"><a class="btn btn-primary" href="/database_app/new_diagram.html" dj-if="user.is_authenticated">New Diagram</a><a class="btn btn-primary" href="/database_app/new_diagram.html" dj-if="user.is_authenticated" style="margin-left: 8px;">My Diagrams</a></div>
+    </nav>
+    <h1>My Diagrams</h1>
     <script src="/assets/js/jquery.min.js"></script>
     <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="/assets/js/bs-init.js"></script>

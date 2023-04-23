@@ -41,6 +41,9 @@ proj.launch-config = {loc('database_app/memgraph_test.py'): ('project',
          'launch-JOuwzUXuuMTltPQ6')),
                       loc('manage.py'): ('custom',
         ('',
+         'launch-JOuwzUXuuMTltPQ6')),
+                      loc('twin_primes.py'): ('project',
+        ('',
          'launch-JOuwzUXuuMTltPQ6'))}
 proj.main-file = loc('manage.py')
 testing.test-framework = {None: ':internal djangotest',
