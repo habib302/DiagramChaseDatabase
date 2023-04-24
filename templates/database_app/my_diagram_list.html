@@ -73,49 +73,25 @@
   </nav>
   {% load bootstrap5 %}
 {% autoescape off %}{% bootstrap_messages %}{% endautoescape %}
-  <div class="card-group d-inline-block">
+  <div class="card-group" style="overflow: visible;display: block;">
+   {% for diagram in diagrams %}
    <div class="card">
-    <img class="card-img-top w-100 d-block"/>
+    <iframe class="quiver-embed" height="304" src="https://q.uiver.app?q=https://q.uiver.app/?q=WzAsIDQsIFswLCAwLCAiXFxidWxsZXQiLCBbMCwgMCwgMCwgMS4wXV0sIFsxLCAwLCAiXFxidWxsZXQiLCBbMCwgMCwgMCwgMS4wXV0sIFswLCAxLCAiXFxidWxsZXQiLCBbMCwgMCwgMCwgMS4wXV0sIFsxLCAxLCAiXFxidWxsZXQiLCBbMCwgMCwgMCwgMS4wXV0sIFswLCAyLCAiIiwgMCwgeyJsYWJlbF9wb3NpdGlvbiI6IDUwLCAib2Zmc2V0IjogMCwgImN1cnZlIjogMCwgInNob3J0ZW4iOiB7InNvdXJjZSI6IDAsICJ0YXJnZXQiOiAwfSwgImxldmVsIjogMSwgInN0eWxlIjogeyJ0YWlsIjogeyJuYW1lIjogIm5vbmUiLCAic2lkZSI6ICJub25lIn0sICJoZWFkIjogeyJuYW1lIjogImFycm93aGVhZCIsICJzaWRlIjogIm5vbmUifSwgImJvZHkiOiB7Im5hbWUiOiAic29saWQifX0sICJjb2xvdXIiOiBbMCwgMCwgMCwgMS4wXX0sIFswLCAwLCAwLCAxLjBdXSwgWzAsIDEsICIiLCAwLCB7ImxhYmVsX3Bvc2l0aW9uIjogNTAsICJvZmZzZXQiOiAwLCAiY3VydmUiOiAwLCAic2hvcnRlbiI6IHsic291cmNlIjogMCwgInRhcmdldCI6IDB9LCAibGV2ZWwiOiAxLCAic3R5bGUiOiB7InRhaWwiOiB7Im5hbWUiOiAibm9uZSIsICJzaWRlIjogIm5vbmUifSwgImhlYWQiOiB7Im5hbWUiOiAiYXJyb3doZWFkIiwgInNpZGUiOiAibm9uZSJ9LCAiYm9keSI6IHsibmFtZSI6ICJzb2xpZCJ9fSwgImNvbG91ciI6IFswLCAwLCAwLCAxLjBdfSwgWzAsIDAsIDAsIDEuMF1dLCBbMSwgMywgIiIsIDAsIHsibGFiZWxfcG9zaXRpb24iOiA1MCwgIm9mZnNldCI6IDAsICJjdXJ2ZSI6IDAsICJzaG9ydGVuIjogeyJzb3VyY2UiOiAwLCAidGFyZ2V0IjogMH0sICJsZXZlbCI6IDEsICJzdHlsZSI6IHsidGFpbCI6IHsibmFtZSI6ICJub25lIiwgInNpZGUiOiAibm9uZSJ9LCAiaGVhZCI6IHsibmFtZSI6ICJhcnJvd2hlYWQiLCAic2lkZSI6ICJub25lIn0sICJib2R5IjogeyJuYW1lIjogInNvbGlkIn19LCAiY29sb3VyIjogWzAsIDAsIDAsIDEuMF19LCBbMCwgMCwgMCwgMS4wXV0sIFsyLCAzLCAiIiwgMCwgeyJsYWJlbF9wb3NpdGlvbiI6IDUwLCAib2Zmc2V0IjogMCwgImN1cnZlIjogMCwgInNob3J0ZW4iOiB7InNvdXJjZSI6IDAsICJ0YXJnZXQiOiAwfSwgImxldmVsIjogMSwgInN0eWxlIjogeyJ0YWlsIjogeyJuYW1lIjogIm5vbmUiLCAic2lkZSI6ICJub25lIn0sICJoZWFkIjogeyJuYW1lIjogImFycm93aGVhZCIsICJzaWRlIjogIm5vbmUifSwgImJvZHkiOiB7Im5hbWUiOiAic29saWQifX0sICJjb2xvdXIiOiBbMCwgMCwgMCwgMS4wXX0sIFswLCAwLCAwLCAxLjBdXV0=&embed" style="border-radius: 8px;border: none;" width="304">
+    </iframe>
     <div class="card-body">
      <h4 class="card-title">
-      Title
+      {{ diagram.title }}
      </h4>
      <p class="card-text">
       Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.
      </p>
-     <button class="btn btn-primary" type="button">
-      Button
-     </button>
+     {% if user.is_authenticated %}
+     <a class="btn btn-primary" href="{% url 'diagram_editor' diagram.uid %}" style='background: url({% static "img/edit-icon.png" %}) no-repeat;background-size: contain;width: 48px;height: 48px;'>
+     </a>
+     {% endif %}
     </div>
    </div>
-   <div class="card">
-    <img class="card-img-top w-100 d-block"/>
-    <div class="card-body">
-     <h4 class="card-title">
-      Title
-     </h4>
-     <p class="card-text">
-      Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.
-     </p>
-     <button class="btn btn-primary" type="button">
-      Button
-     </button>
-    </div>
-   </div>
-   <div class="card">
-    <img class="card-img-top w-100 d-block"/>
-    <div class="card-body">
-     <h4 class="card-title">
-      Title
-     </h4>
-     <p class="card-text">
-      Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.
-     </p>
-     <button class="btn btn-primary" type="button">
-      Button
-     </button>
-    </div>
-   </div>
+   {% endfor %}
   </div>
   <script src='{% static "js/jquery.min.js" %}'>
   </script>

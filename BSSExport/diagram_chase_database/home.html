@@ -28,7 +28,7 @@
         </div>
     </nav>{% load bootstrap5 %}
 {% autoescape off %}{% bootstrap_messages %}{% endautoescape %}
-    <div class="container" style="padding-top: 25px;"><a class="btn btn-primary" href="/database_app/new_diagram.html" dj-if="user.is_authenticated">New Diagram</a><a class="btn btn-primary" href="/database_app/new_diagram.html" dj-if="user.is_authenticated" style="margin-left: 8px;">My Diagrams</a></div>
+    <div class="container" style="padding-top: 25px;"><a class="btn btn-primary" href="/database_app/new_diagram.html" dj-if="user.is_authenticated">New Diagram</a><a class="btn btn-primary" href="/database_app/my_diagram_list.html" dj-if="user.is_authenticated" style="margin-left: 8px;">My Diagrams</a></div>
     <script src="/assets/js/jquery.min.js"></script>
     <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="/assets/js/bs-init.js"></script>

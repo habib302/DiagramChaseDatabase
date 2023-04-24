@@ -71,7 +71,7 @@ def test(request):
    return render(request, 'test.html')
 
 
-def diagram_list(request):
+def my_diagram_list(request):
    from django.shortcuts import render
    
    diagrams = Diagram.nodes.filter(checked_out_by=request.user.username)
@@ -81,13 +81,13 @@ def diagram_list(request):
       data = diagram.quiver_format()
       data = json.dumps(data)
       data = base64.b64encode(data.encode('utf-8'))
-      diagram.embed_data = data
+      diagram.embed_data = data.decode()
       
    context = {
       'diagrams': diagrams,
    }
    
-   return render(request, "database_app/diagram_list.html", context)
+   return render(request, "database_app/my_diagram_list.html", context)
 
 
 @login_required
