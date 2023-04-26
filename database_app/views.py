@@ -9,10 +9,27 @@ from diagram_chase_database.settings import DEBUG, MAX_USER_EDIT_DIAGRAMS
 from neomodel.properties import StringProperty
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.templatetags.static import static
 import base64
 import json
 
 # Create your views here.
+
+def embed_diagram(request, diagram_id):
+   if request.method == 'GET':
+      diagram = get_model_by_uid(Diagram, uid=diagram_id)
+      data = diagram.quiver_format()
+      data = json.dumps(data)
+      data = base64.b64encode(data.encode('utf-8'))         
+      diagram.embed_data = f'{static("")}/quiver/src/index.html?q={data.decode()}&embed'
+      
+      context = {
+         'diagram' : diagram
+      }
+      
+      return render(request, 'database_app/embed_diagram.html', context)
+   
+
 
 def load_diagram_from_database(request, diagram_id):
    try:
@@ -71,20 +88,22 @@ def test(request):
    return render(request, 'test.html')
 
 
-def my_diagram_list(request):
-   from django.shortcuts import render
-   
+def my_diagram_list(request):   
    diagrams = Diagram.nodes.filter(checked_out_by=request.user.username)
+   diagram_list = []
    
    for diagram in diagrams:
-      diagram:Diagram
       data = diagram.quiver_format()
       data = json.dumps(data)
-      data = base64.b64encode(data.encode('utf-8'))
+      data = base64.b64encode(data.encode('utf-8'))         
+      #diagram.embed_data = f"/static/quiver/src/index.html?q={data.decode()}&embed" 
       diagram.embed_data = data.decode()
+      diagram_list.append(diagram)
       
+   #page_num %= len(diagrams)
+   
    context = {
-      'diagrams': diagrams,
+      'diagrams': diagram_list,
    }
    
    return render(request, "database_app/my_diagram_list.html", context)

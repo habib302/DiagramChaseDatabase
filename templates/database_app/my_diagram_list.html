@@ -9,17 +9,17 @@
    DiagramChaseDatabase
   </title>
   <link href='{% static "bootstrap/css/bootstrap.min.css" %}' rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/css?family=Indie+Flower&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css?family=Indie+Flower&display=swap" rel="stylesheet"/>
   <link href='{% static "css/animate.min.css" %}' rel="stylesheet"/>
   <link href='{% static "css/Articles-Cards-images.css" %}' rel="stylesheet"/>
   <link href='{% static "css/Editable-Text.css" %}' rel="stylesheet"/>
   <link href='{% static "css/Navbar-Centered-Brand-Dark-icons.css" %}' rel="stylesheet"/>
   <link href='{% static "css/styles.css" %}' rel="stylesheet"/>
  </head>
- <body>
+ <body style="background: #fbff4d;">
   <nav class="navbar navbar-dark navbar-expand-md bg-dark py-1">
    <div class="container">
-    <a class="navbar-brand d-flex align-items-center" href='{% static "home.html" %}'>
+    <a class="navbar-brand d-flex align-items-center" href="/">
      <span class="bounce animated" style="color: var(--bs-cyan);font-family: 'Indie Flower', serif;font-size: 30px;">
       Diagram Chase Database
      </span>
@@ -73,22 +73,148 @@
   </nav>
   {% load bootstrap5 %}
 {% autoescape off %}{% bootstrap_messages %}{% endautoescape %}
-  <div class="card-group" style="overflow: visible;display: block;">
-   {% for diagram in diagrams %}
-   <div class="card">
-    <iframe class="quiver-embed" height="304" src="https://q.uiver.app?q=https://q.uiver.app/?q=WzAsIDQsIFswLCAwLCAiXFxidWxsZXQiLCBbMCwgMCwgMCwgMS4wXV0sIFsxLCAwLCAiXFxidWxsZXQiLCBbMCwgMCwgMCwgMS4wXV0sIFswLCAxLCAiXFxidWxsZXQiLCBbMCwgMCwgMCwgMS4wXV0sIFsxLCAxLCAiXFxidWxsZXQiLCBbMCwgMCwgMCwgMS4wXV0sIFswLCAyLCAiIiwgMCwgeyJsYWJlbF9wb3NpdGlvbiI6IDUwLCAib2Zmc2V0IjogMCwgImN1cnZlIjogMCwgInNob3J0ZW4iOiB7InNvdXJjZSI6IDAsICJ0YXJnZXQiOiAwfSwgImxldmVsIjogMSwgInN0eWxlIjogeyJ0YWlsIjogeyJuYW1lIjogIm5vbmUiLCAic2lkZSI6ICJub25lIn0sICJoZWFkIjogeyJuYW1lIjogImFycm93aGVhZCIsICJzaWRlIjogIm5vbmUifSwgImJvZHkiOiB7Im5hbWUiOiAic29saWQifX0sICJjb2xvdXIiOiBbMCwgMCwgMCwgMS4wXX0sIFswLCAwLCAwLCAxLjBdXSwgWzAsIDEsICIiLCAwLCB7ImxhYmVsX3Bvc2l0aW9uIjogNTAsICJvZmZzZXQiOiAwLCAiY3VydmUiOiAwLCAic2hvcnRlbiI6IHsic291cmNlIjogMCwgInRhcmdldCI6IDB9LCAibGV2ZWwiOiAxLCAic3R5bGUiOiB7InRhaWwiOiB7Im5hbWUiOiAibm9uZSIsICJzaWRlIjogIm5vbmUifSwgImhlYWQiOiB7Im5hbWUiOiAiYXJyb3doZWFkIiwgInNpZGUiOiAibm9uZSJ9LCAiYm9keSI6IHsibmFtZSI6ICJzb2xpZCJ9fSwgImNvbG91ciI6IFswLCAwLCAwLCAxLjBdfSwgWzAsIDAsIDAsIDEuMF1dLCBbMSwgMywgIiIsIDAsIHsibGFiZWxfcG9zaXRpb24iOiA1MCwgIm9mZnNldCI6IDAsICJjdXJ2ZSI6IDAsICJzaG9ydGVuIjogeyJzb3VyY2UiOiAwLCAidGFyZ2V0IjogMH0sICJsZXZlbCI6IDEsICJzdHlsZSI6IHsidGFpbCI6IHsibmFtZSI6ICJub25lIiwgInNpZGUiOiAibm9uZSJ9LCAiaGVhZCI6IHsibmFtZSI6ICJhcnJvd2hlYWQiLCAic2lkZSI6ICJub25lIn0sICJib2R5IjogeyJuYW1lIjogInNvbGlkIn19LCAiY29sb3VyIjogWzAsIDAsIDAsIDEuMF19LCBbMCwgMCwgMCwgMS4wXV0sIFsyLCAzLCAiIiwgMCwgeyJsYWJlbF9wb3NpdGlvbiI6IDUwLCAib2Zmc2V0IjogMCwgImN1cnZlIjogMCwgInNob3J0ZW4iOiB7InNvdXJjZSI6IDAsICJ0YXJnZXQiOiAwfSwgImxldmVsIjogMSwgInN0eWxlIjogeyJ0YWlsIjogeyJuYW1lIjogIm5vbmUiLCAic2lkZSI6ICJub25lIn0sICJoZWFkIjogeyJuYW1lIjogImFycm93aGVhZCIsICJzaWRlIjogIm5vbmUifSwgImJvZHkiOiB7Im5hbWUiOiAic29saWQifX0sICJjb2xvdXIiOiBbMCwgMCwgMCwgMS4wXX0sIFswLCAwLCAwLCAxLjBdXV0=&embed" style="border-radius: 8px;border: none;" width="304">
-    </iframe>
-    <div class="card-body">
-     <h4 class="card-title">
-      {{ diagram.title }}
-     </h4>
-     <p class="card-text">
-      Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.
-     </p>
-     {% if user.is_authenticated %}
-     <a class="btn btn-primary" href="{% url 'diagram_editor' diagram.uid %}" style='background: url({% static "img/edit-icon.png" %}) no-repeat;background-size: contain;width: 48px;height: 48px;'>
+  <h1 class="text-center" style="margin-left: 14px;">
+   {{user.username}}'s diagrams:
+  </h1>
+  <div class="container d-flex flex-row justify-content-around flex-wrap">
+   <div class="dropdown">
+    <button aria-expanded="false" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" type="button">
+     Order by date created
+    </button>
+    <div class="dropdown-menu">
+     <a class="dropdown-item" href='{% static "#" %}'>
+      First Item
      </a>
-     {% endif %}
+     <a class="dropdown-item" href='{% static "#" %}'>
+      Second Item
+     </a>
+     <a class="dropdown-item" href='{% static "#" %}'>
+      Third Item
+     </a>
+    </div>
+   </div>
+   <nav class="d-flex" style="padding: 0px;height: 38px;margin-top: 4px;">
+    <ul class="pagination">
+     <li class="page-item">
+      <a aria-label="Previous" class="page-link" href='{% static "#" %}'>
+       <span aria-hidden="true">
+        «
+       </span>
+      </a>
+     </li>
+     <li class="page-item">
+      <a class="page-link" href='{% static "#" %}'>
+       1
+      </a>
+     </li>
+     <li class="page-item">
+      <a class="page-link" href='{% static "#" %}'>
+       2
+      </a>
+     </li>
+     <li class="page-item">
+      <a class="page-link" href='{% static "#" %}'>
+       3
+      </a>
+     </li>
+     <li class="page-item">
+      <a class="page-link" href='{% static "#" %}'>
+       4
+      </a>
+     </li>
+     <li class="page-item">
+      <a class="page-link" href='{% static "#" %}'>
+       5
+      </a>
+     </li>
+     <li class="page-item">
+      <a class="page-link" href='{% static "#" %}'>
+       5
+      </a>
+     </li>
+     <li class="page-item">
+      <a class="page-link" href='{% static "#" %}'>
+       5
+      </a>
+     </li>
+     <li class="page-item">
+      <a class="page-link" href='{% static "#" %}'>
+       5
+      </a>
+     </li>
+     <li class="page-item">
+      <a class="page-link" href='{% static "#" %}'>
+       5
+      </a>
+     </li>
+     <li class="page-item">
+      <a class="page-link" href='{% static "#" %}'>
+       5
+      </a>
+     </li>
+     <li class="page-item">
+      <a class="page-link" href='{% static "#" %}'>
+       5
+      </a>
+     </li>
+     <li class="page-item">
+      <a class="page-link" href='{% static "#" %}'>
+       5
+      </a>
+     </li>
+     <li class="page-item">
+      <a class="page-link" href='{% static "#" %}'>
+       5
+      </a>
+     </li>
+     <li class="page-item">
+      <a class="page-link" href='{% static "#" %}'>
+       5
+      </a>
+     </li>
+     <li class="page-item">
+      <a class="page-link" href='{% static "#" %}'>
+       5
+      </a>
+     </li>
+     <li class="page-item">
+      <a class="page-link" href='{% static "#" %}'>
+       5
+      </a>
+     </li>
+     <li class="page-item">
+      <a class="page-link" href='{% static "#" %}'>
+       5
+      </a>
+     </li>
+     <li class="page-item">
+      <a aria-label="Next" class="page-link" href='{% static "#" %}'>
+       <span aria-hidden="true">
+        »
+       </span>
+      </a>
+     </li>
+    </ul>
+   </nav>
+  </div>
+  <div class="w-100">
+  </div>
+  <div class="container d-flex flex-row flex-grow-1 flex-fill justify-content-center flex-wrap align-items-xl-start" style="width: 100%;height: auto;padding-left: 0px;margin: 0px;margin-left: 6px;margin-right: 0px;padding-right: 0px;max-width: 100%;">
+   {% for diagram in diagrams %}
+   <div class="card" style="border-radius: 12px;margin: 12px;border-width: 2px;border-color: var(--bs-info);width: 500px;height: auto;min-height: 300px;">
+    <div class="card-body">
+     <h3 class="card-title" data-bss-hover-animate="pulse" dj-ref="diagram.name" style="padding: 4px;text-align: center;">
+      {% if user.is_authenticated %}
+      <a class="d-inline-block float-start btn btn-primary" href="{% url 'diagram_editor' diagram.uid %}" style='background: url({% static "img/edit-icon.png" %}) center / cover no-repeat;height: 32px;width: 32px;padding: 0;margin-right: 20px;'>
+      </a>
+      {% endif %}
+      {{ diagram.name }}
+     </h3>
+     <iframe class="quiver-embed" height="300px" scrolling="no" src="{% static 'quiver/src/index.html' %}?q={{ diagram.embed_data }}&embed" style="border: none;overflow: scroll;display: block;" width="100%">
+     </iframe>
+     <p class="card-text">
+      {{ diagram.name }} TODO - Diagram description
+     </p>
     </div>
    </div>
    {% endfor %}

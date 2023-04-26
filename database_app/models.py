@@ -289,6 +289,7 @@ class Diagram(StructuredNode, Model):
     COMMUTES = { 'C' : 'Commutes', 'NC' : 'Noncommutative' }
     commutes = StringProperty(choices=COMMUTES, default='C')
     checked_out_by = StringProperty(max_length=MAX_TEXT_LENGTH)
+    embed_data = StringProperty()
     
     def morphism_count(self):
         count = 0

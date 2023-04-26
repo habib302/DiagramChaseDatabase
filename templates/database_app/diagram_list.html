@@ -9,7 +9,7 @@
    DiagramChaseDatabase
   </title>
   <link href='{% static "bootstrap/css/bootstrap.min.css" %}' rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/css?family=Indie+Flower&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css?family=Indie+Flower&display=swap" rel="stylesheet"/>
   <link href='{% static "css/Articles-Cards-images.css" %}' rel="stylesheet"/>
   <link href='{% static "css/Editable-Text.css" %}' rel="stylesheet"/>
   <link href='{% static "css/Navbar-Centered-Brand-Dark-icons.css" %}' rel="stylesheet"/>
@@ -19,15 +19,15 @@
   {% for diagram in diagrams %}
   <div class="card" style="margin: 4px;">
    <div class="card-body diagram-list-item-body">
+    <div class="diagram-screenshot">
+     <iframe class="quiver-embed diagram-list-quiver-embed" src="https://q.uiver.app?q={{ diagram.embed_data }}&embed">
+     </iframe>
+    </div>
     <h4 class="card-title" dj-ref="diagram.name">
     </h4>
     <p class="card-text" dj-ref="diagram.checked_out_by">
      Additional information
     </p>
-    <div class="diagram-screenshot">
-     <iframe class="quiver-embed diagram-list-quiver-embed" src="https://q.uiver.app?q={{ diagram.embed_data }}&amp;embed">
-     </iframe>
-    </div>
    </div>
   </div>
   {% endfor %}

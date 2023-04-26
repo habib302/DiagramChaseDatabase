@@ -16,11 +16,11 @@
 <body>
     <div class="card" dj-for="diagram in diagrams" style="margin: 4px;">
         <div class="card-body diagram-list-item-body">
-            <h4 class="card-title" dj-ref="diagram.name"></h4>
-            <p class="card-text" dj-ref="diagram.checked_out_by">Additional information</p>
             <div class="diagram-screenshot"><iframe class="quiver-embed diagram-list-quiver-embed" src="https://q.uiver.app?q={{ diagram.embed_data }}&embed"></iframe>
 
 </div>
+            <h4 class="card-title" dj-ref="diagram.name"></h4>
+            <p class="card-text" dj-ref="diagram.checked_out_by">Additional information</p>
         </div>
     </div>
     <script src="/assets/js/jquery.min.js"></script>

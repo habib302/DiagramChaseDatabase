@@ -48,4 +48,5 @@ urlpatterns = [
     path("new_diagram", db_views.create_new_diagram, name="new_diagram"),
     path("messages", MessagesView.as_view(), name='messages'),
     path("my_diagram_list", db_views.my_diagram_list, name='my_diagram_list'),
+    path("embed_diagram/<str:diagram_id>", db_views.embed_diagram, name="embed_diagram"),
 ]
