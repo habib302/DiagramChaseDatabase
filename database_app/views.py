@@ -5,13 +5,15 @@ from django.http import JsonResponse
 from diagram_chase_database.python_tools import full_qualname
 from django.db import OperationalError
 from django.core.exceptions import ObjectDoesNotExist
-from diagram_chase_database.settings import DEBUG, MAX_USER_EDIT_DIAGRAMS
+from diagram_chase_database.settings import DEBUG, MAX_USER_EDIT_DIAGRAMS, MAX_DIAGRAMS_PER_PAGE, MAX_TEXT_LENGTH
 from neomodel.properties import StringProperty
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.templatetags.static import static
 import base64
 import json
+from .forms import FunctorForm
+import re
 
 # Create your views here.
 
@@ -87,23 +89,70 @@ def save_diagram_to_database(request, diagram_id:str):
 def test(request):
    return render(request, 'test.html')
 
+order_by_text_map = {
+   'name' : 'name',
+   'modified' : 'date modified',
+   'created' : 'date created',
+}
 
-def my_diagram_list(request):   
-   diagrams = Diagram.nodes.filter(checked_out_by=request.user.username)
+order_dir_text_map = {
+   'asc' : 'Ascending',
+   'desc' : 'Descending',
+}
+
+@login_required
+def my_diagram_list(request, order_by, order_dir, page_num):   
+   if order_by not in order_by_text_map or order_dir not in order_dir_text_map:
+      return
+   
+   diagrams = Diagram.nodes
+   
+   sign = '-' if order_dir == 'desc' else ''
+   
+   if order_by == 'created':
+      diagrams = diagrams.order_by(sign + 'date_created') 
+   elif order_by == 'modified':
+      diagrams = diagrams.order_by(sign + 'date_modified')
+   elif order_by == 'name':
+      diagrams = diagrams.order_by(sign + 'name')
+  
+   diagrams = diagrams.filter(checked_out_by=request.user.username)
+      
+   num_diagrams = len(diagrams)
+   
+   N = MAX_DIAGRAMS_PER_PAGE
+   num_pages = int(num_diagrams / N) + (1 if num_diagrams % N != 0 else 0)
+   
    diagram_list = []
    
-   for diagram in diagrams:
-      data = diagram.quiver_format()
-      data = json.dumps(data)
-      data = base64.b64encode(data.encode('utf-8'))         
-      #diagram.embed_data = f"/static/quiver/src/index.html?q={data.decode()}&embed" 
-      diagram.embed_data = data.decode()
-      diagram_list.append(diagram)
+   if num_pages != 0:
+      page_num %= num_pages
       
-   #page_num %= len(diagrams)
+      if page_num == num_pages - 1:
+         diagrams = diagrams[N*page_num:N*page_num + num_diagrams % N]
+      else:
+         diagrams = diagrams[N*page_num : N*(page_num + 1)]
    
+      for diagram in diagrams:
+         data = diagram.quiver_format()
+         data = json.dumps(data)
+         data = base64.b64encode(data.encode('utf-8')) 
+         diagram.embed_data = data.decode()
+         diagram_list.append(diagram)
+            
+   else:
+      page_num = 0 
+      
    context = {
       'diagrams': diagram_list,
+      'num_pages': num_pages,
+      'page_num': page_num,
+      'next_page' : page_num + 1,
+      'prev_page' : page_num - 1,
+      'order_by' : order_by,
+      'order_dir' : order_dir,
+      'order_by_text' : order_by_text_map[order_by],
+      'order_dir_text' : order_dir_text_map[order_dir],
    }
    
    return render(request, "database_app/my_diagram_list.html", context)
@@ -146,10 +195,9 @@ def diagram_editor(request, diagram_id:str):
       context = {
          'diagram_name' : diagram.name,
          'category_name' : category.name,
-         'category_id' : category.uid,
          'diagram_id' : diagram.uid,
          'quiver_str' : diagram_data,
-         'commutes_text' : diagram.commutes_text,
+         #'commutes_text' : diagram.commutes_text,
       }
 
       messages.success(request, f'🌩️ Successfully loaded diagram (id={diagram.uid}) from the database!')
@@ -158,11 +206,66 @@ def diagram_editor(request, diagram_id:str):
    except Exception as e:
       messages.error(request, f'{full_qualname(e)}: {str(e)}')   
       return redirect('home')
-
-
+   
+   
 @login_required
 def create_new_diagram(request):   
    diagram = Diagram.our_create(name="Untitled Diagram")
    diagram.checked_out_by = request.user.username
    diagram.save()
    return redirect('diagram_editor', diagram.uid)
+
+identity_regex = re.compile(r'\\text{id}_\{(?P<subscr>.+)\}|\\text\{id\}_(?P<subscr1>.)|\\text\{id\}')
+
+@login_required
+def functor_diagram(request, diagram_id=None):
+   try:
+      notation = request.POST.get('functor_notation')
+      codomain_category = request.POST.get('functor_codomain')
+      
+      if len(notation) > MAX_TEXT_LENGTH:
+         raise OperationalError(f'Notation string is too long.')
+      
+      if len(codomain_category) > MAX_TEXT_LENGTH:
+         raise OperationalError(f'Codomain category string is too long.')
+   
+      diagram = get_model_by_uid(Diagram, uid=diagram_id)
+         
+      diagram_name = f'Functorial image of diagram "{diagram.name}" under {notation}'
+      image_diagram = diagram.copy(name=diagram_name)
+      image_diagram.checked_out_by = request.user.username
+
+      for X in image_diagram.all_objects():
+         if X.name:            
+            X.name = notation.replace(r'\cdot', X.name)
+            X.save()
+       
+         for f in X.all_morphisms():
+            if f.name:
+               id_match = identity_regex.match(f.name)
+               
+               if id_match:
+                  subscr1 = id_match.group('subscr1')
+                  
+                  if subscr1:
+                     subscr1 = notation.replace(r'\cdot', subscr1)
+                     f.name = f"\\text{{id}}_{{{subscr1}}}"
+                     
+                  else:
+                     subscr = id_match.group('subscr')
+                     
+                     if subscr:
+                        subscr = notation.replace(r'\cdot', subscr1)                     
+                        f.name = f"\\text{{id}}_{{{subscr}}}"
+                  
+               else:
+                  f.name = notation.replace(r'\cdot', f.name)
+               f.save() 
+      
+      image_diagram.save()
+      
+      return redirect('diagram_editor', image_diagram.uid)
+      
+   except Exception as e:
+      messages.error(request, f'{full_qualname(e)}: {str(e)}')
+      return redirect('home')

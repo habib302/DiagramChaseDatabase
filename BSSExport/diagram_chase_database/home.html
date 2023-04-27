@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="/assets/css/styles.css">
 </head>
 
-<body>
+<body style="background: #fcff68;">
     <nav class="navbar navbar-dark navbar-expand-md bg-dark py-1">
         <div class="container"><a class="navbar-brand d-flex align-items-center" href="/"><span class="bounce animated" style="color: var(--bs-cyan);font-family: 'Indie Flower', serif;font-size: 30px;">Diagram Chase Database</span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-6"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse flex-grow-0 order-md-first" id="navcol-6">
@@ -28,7 +28,7 @@
         </div>
     </nav>{% load bootstrap5 %}
 {% autoescape off %}{% bootstrap_messages %}{% endautoescape %}
-    <div class="container" style="padding-top: 25px;"><a class="btn btn-primary" href="/database_app/new_diagram.html" dj-if="user.is_authenticated">New Diagram</a><a class="btn btn-primary" href="/database_app/my_diagram_list.html" dj-if="user.is_authenticated" style="margin-left: 8px;">My Diagrams</a></div>
+    <div class="container" style="padding-top: 25px;"><a class="btn btn-primary" href="/database_app/new_diagram.html" dj-if="user.is_authenticated">New Diagram</a><a class="btn btn-primary" href="{% url 'my_diagram_list' 'created' 'asc' 0 %}" dj-if="user.is_authenticated" style="margin-left: 8px;">My Diagrams</a></div>
     <script src="/assets/js/jquery.min.js"></script>
     <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="/assets/js/bs-init.js"></script>

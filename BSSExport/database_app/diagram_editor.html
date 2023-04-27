@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="/assets/css/styles.css">
 </head>
 
-<body>
+<body style="background: var(--bs-body-bg);">
     <nav class="navbar navbar-dark navbar-expand-md bg-dark py-1">
         <div class="container"><a class="navbar-brand d-flex align-items-center" href="/"><span class="bounce animated" style="color: var(--bs-cyan);font-family: 'Indie Flower', serif;font-size: 30px;">Diagram Chase Database</span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-6"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse flex-grow-0 order-md-first" id="navcol-6">
@@ -38,6 +38,16 @@
 <div id="django-messages" style="z-index: 1;">
     {% autoescape off %}{% bootstrap_messages %}{% endautoescape %}              
 </div>  
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvas-2">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title">Take Functorial Image</h5><button class="btn-close" type="button" aria-label="Close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="container">
+                <form method="post" action="{% url 'functor_diagram' diagram_id %}">{% csrf_token %}<input class="form-control-plaintext" type="text" value="Notation:" readonly=""><input class="form-control" type="text" name="functor_notation" value="F(\cdot)" placeholder="Use \cdot to indicate where the argument goes"><input class="form-control-plaintext" type="text" value="Into Category:" readonly=""><input class="form-control" type="text" name="functor_codomain" value="C" placeholder="Use \cdot to indicate where the argument goes"><input class="btn btn-primary" type="submit" style="margin: 12px;margin-left: 0px;" value="Functor"></form>
+            </div>
+        </div>
+    </div>
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvas-1">
         <div class="offcanvas-header bounce animated">
             <h5 class="offcanvas-title bounce animated">Math</h5><button class="btn-close" type="button" aria-label="Close" data-bs-dismiss="offcanvas"></button>
@@ -47,7 +57,7 @@
         </div>
     </div>
     <div class="container-fluid" style="padding: 0;">
-        <div class="btn-group" role="group" style="bottom: 2%;margin-left: 8px;position: absolute;z-index: 1;"><button class="btn btn-primary" type="button" data-bs-target="#offcanvas-1" data-bs-toggle="offcanvas">Math</button><button class="btn btn-primary" id="save-button" type="button" onclick="save_diagram_to_database();">Save</button></div><iframe id="quiver-editor"
+        <div class="btn-group" role="group" style="bottom: 2%;margin-left: 8px;position: absolute;z-index: 1;"><button class="btn btn-primary" type="button" data-bs-target="#offcanvas-1" data-bs-toggle="offcanvas">Math</button><button class="btn btn-primary" type="button" data-bs-target="#offcanvas-2" data-bs-toggle="offcanvas">Functor</button><button class="btn btn-primary" id="save-button" type="button" onclick="save_diagram_to_database();">Save</button></div><iframe id="quiver-editor"
         src="quiver/src/index.html" 
         title="Quiver Diagram Editor" 
         style="width: 99.5vw;height: 91.5vh;position: relative;display: flex;"/>

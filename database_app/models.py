@@ -8,6 +8,7 @@ from diagram_chase_database.python_tools import deep_get, deep_set
 from diagram_chase_database.variable import Variable
 from diagram_chase_database.keyword import Keyword
 from database_app.neo4j_tools import escape_regex_str, neo4j_escape_regex_str
+from datetime import datetime
 
 # Create your models here.
 
@@ -289,7 +290,8 @@ class Diagram(StructuredNode, Model):
     COMMUTES = { 'C' : 'Commutes', 'NC' : 'Noncommutative' }
     commutes = StringProperty(choices=COMMUTES, default='C')
     checked_out_by = StringProperty(max_length=MAX_TEXT_LENGTH)
-    embed_data = StringProperty()
+    date_modified = DateTimeProperty()
+    date_created = DateTimeProperty()
     
     def morphism_count(self):
         count = 0
@@ -334,6 +336,7 @@ class Diagram(StructuredNode, Model):
         diagram = Diagram(**kwargs).save()
         category = get_unique(Category, name='Any')
         diagram.category.connect(category)
+        diagram.date_modified = diagram.date_created = datetime.now()
         diagram.save()  
         return diagram
         
@@ -373,6 +376,7 @@ class Diagram(StructuredNode, Model):
             f.save()
             A.save()            
             
+        self.date_modified = datetime.now()
         self.add_objects(obs)               
     
     def all_objects(self):

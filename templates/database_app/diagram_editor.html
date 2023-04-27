@@ -16,7 +16,7 @@
   <link href='{% static "css/Navbar-Centered-Brand-Dark-icons.css" %}' rel="stylesheet"/>
   <link href='{% static "css/styles.css" %}' rel="stylesheet"/>
  </head>
- <body>
+ <body style="background: var(--bs-body-bg);">
   <nav class="navbar navbar-dark navbar-expand-md bg-dark py-1">
    <div class="container">
     <a class="navbar-brand d-flex align-items-center" href="/">
@@ -71,6 +71,27 @@
   <div id="django-messages" style="z-index: 1;">
    {% autoescape off %}{% bootstrap_messages %}{% endautoescape %}
   </div>
+  <div class="offcanvas offcanvas-start" id="offcanvas-2" tabindex="-1">
+   <div class="offcanvas-header">
+    <h5 class="offcanvas-title">
+     Take Functorial Image
+    </h5>
+    <button aria-label="Close" class="btn-close" data-bs-dismiss="offcanvas" type="button">
+    </button>
+   </div>
+   <div class="offcanvas-body">
+    <div class="container">
+     <form action="{% url 'functor_diagram' diagram_id %}" method="post">
+      {% csrf_token %}
+      <input class="form-control-plaintext" readonly="" type="text" value="Notation:"/>
+      <input class="form-control" name="functor_notation" placeholder="Use \cdot to indicate where the argument goes" type="text" value="F(\cdot)"/>
+      <input class="form-control-plaintext" readonly="" type="text" value="Into Category:"/>
+      <input class="form-control" name="functor_codomain" placeholder="Use \cdot to indicate where the argument goes" type="text" value="C"/>
+      <input class="btn btn-primary" style="margin: 12px;margin-left: 0px;" type="submit" value="Functor"/>
+     </form>
+    </div>
+   </div>
+  </div>
   <div class="offcanvas offcanvas-start" id="offcanvas-1" tabindex="-1">
    <div class="offcanvas-header bounce animated">
     <h5 class="offcanvas-title bounce animated">
@@ -92,6 +113,9 @@
    <div class="btn-group" role="group" style="bottom: 2%;margin-left: 8px;position: absolute;z-index: 1;">
     <button class="btn btn-primary" data-bs-target="#offcanvas-1" data-bs-toggle="offcanvas" type="button">
      Math
+    </button>
+    <button class="btn btn-primary" data-bs-target="#offcanvas-2" data-bs-toggle="offcanvas" type="button">
+     Functor
     </button>
     <button class="btn btn-primary" id="save-button" onclick="save_diagram_to_database();" type="button">
      Save
