@@ -110,16 +110,23 @@
    </div>
   </div>
   <div class="container-fluid" style="padding: 0;">
-   <div class="btn-group" role="group" style="bottom: 2%;margin-left: 8px;position: absolute;z-index: 1;">
-    <button class="btn btn-primary" data-bs-target="#offcanvas-1" data-bs-toggle="offcanvas" type="button">
-     Math
+   <h5 class="text-center d-inline-flex float-start align-items-xl-center" id="diagram-name" style="position: absolute;float: left;margin: 8px;z-index: 1;max-width: 25%;height: auto;">
+    {{ diagram_name }}
+    <button class="btn btn-primary d-xl-flex align-items-xl-center" style='background: url({% static "img/edit-icon.png" %}) no-repeat;background-size: cover;width: 32px;height: 32px;margin: 8px;' type="button">
     </button>
-    <button class="btn btn-primary" data-bs-target="#offcanvas-2" data-bs-toggle="offcanvas" type="button">
-     Functor
-    </button>
-    <button class="btn btn-primary" id="save-button" onclick="save_diagram_to_database();" type="button">
-     Save
-    </button>
+   </h5>
+   <div class="d-grid d-xxl-flex justify-content-start align-items-start align-content-start align-self-start flex-wrap align-items-xxl-center" style="bottom: 2%;position: absolute;display: flex;overflow: visible;width: 100%;margin-left: 8px;z-index: 1;">
+    <div class="btn-group" role="group">
+     <button class="btn btn-primary" data-bs-target="#offcanvas-1" data-bs-toggle="offcanvas" type="button">
+      Math
+     </button>
+     <button class="btn btn-primary" data-bs-target="#offcanvas-2" data-bs-toggle="offcanvas" type="button">
+      Functor
+     </button>
+     <button class="btn btn-primary" id="save-button" onclick="save_diagram_to_database();" type="button">
+      Save
+     </button>
+    </div>
    </div>
    <iframe id="quiver-editor" src='{% static "quiver/src/index.html" %}' style="width: 99.5vw;height: 91.5vh;position: relative;display: flex;" title="Quiver Diagram Editor">
    </iframe>

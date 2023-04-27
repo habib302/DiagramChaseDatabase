@@ -14,3 +14,14 @@
   opacity: 1;
 }
 
+h5 {
+}
+
+#diagram-name:hover button {
+  opacity: 1;
+}
+
+#diagram-name button {
+  opacity: 0;
+}
+

@@ -63,7 +63,8 @@ function load_diagram_from_database()
         const URL_prefix = iframeURL.replace(/\?.*$/, "");
         iframeURL = `${URL_prefix}?q=${btoa(unescape(encodeURIComponent(data)))}`;
         $(quiverIframe).attr('src', iframeURL);
-        quiverLoadDiagram();    
+        quiverLoadDiagram();
+        hide_quiver_grid();
     });
 }
 
@@ -77,3 +78,5 @@ function get_json_from_url(url)
         }
     });
 }
+
+

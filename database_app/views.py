@@ -236,31 +236,42 @@ def functor_diagram(request, diagram_id=None):
       image_diagram.checked_out_by = request.user.username
 
       for X in image_diagram.all_objects():
-         if X.name:            
-            X.name = notation.replace(r'\cdot', X.name)
+         if X.name: 
+            parts = []
+            
+            for name in X.name.split("="):
+               parts.append(notation.replace(r'\cdot', name))
+               
+            X.name = "=".join(parts)
             X.save()
        
          for f in X.all_morphisms():
             if f.name:
-               id_match = identity_regex.match(f.name)
+               parts = []
                
-               if id_match:
-                  subscr1 = id_match.group('subscr1')
+               for name in f.name.split("="):
                   
-                  if subscr1:
-                     subscr1 = notation.replace(r'\cdot', subscr1)
-                     f.name = f"\\text{{id}}_{{{subscr1}}}"
+                  id_match = identity_regex.match(name)
+                  
+                  if id_match:
+                     subscr1 = id_match.group('subscr1')
+                     
+                     if subscr1:
+                        subscr1 = notation.replace(r'\cdot', subscr1)
+                        parts.append(f"\\text{{id}}_{{{subscr1}}}")
+                        
+                     else:
+                        subscr = id_match.group('subscr')
+                        
+                        if subscr:
+                           subscr = notation.replace(r'\cdot', subscr1)                     
+                           parts.append(f"\\text{{id}}_{{{subscr}}}")
                      
                   else:
-                     subscr = id_match.group('subscr')
+                     parts.append(notation.replace(r'\cdot', name))
                      
-                     if subscr:
-                        subscr = notation.replace(r'\cdot', subscr1)                     
-                        f.name = f"\\text{{id}}_{{{subscr}}}"
-                  
-               else:
-                  f.name = notation.replace(r'\cdot', f.name)
-               f.save() 
+                  f.name = "=".join(parts)
+                  f.save() 
       
       image_diagram.save()
       
