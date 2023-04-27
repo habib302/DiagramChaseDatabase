@@ -71,6 +71,43 @@
   <div id="django-messages" style="z-index: 1;">
    {% autoescape off %}{% bootstrap_messages %}{% endautoescape %}
   </div>
+  <div class="modal fade editable-text-modal" id="diagram-name-modal" role="dialog" style="margin-top: 10%;" tabindex="-1">
+   <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+     <div class="modal-header" style="height: 46.4219px;">
+      <h4 class="modal-title">
+       Edit Text
+      </h4>
+      <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" id="diagram-name-close-button" type="button">
+      </button>
+     </div>
+     <div class="modal-body d-md-flex justify-content-md-center" style="padding: 0px;height: auto;width: auto;">
+      <input class="form-control-lg d-md-flex justify-content-md-center align-items-md-center" id="diagram-name-input" placeholder="Enter a diagram name" style="width: 90%;height: 100%;padding: 0px;margin: 0;margin-right: 5%;margin-bottom: 0;text-align: center;margin-left: 5%;background: rgba(201,255,132,0.48);" type="text" value="{{ diagram_name }}"/>
+      <p>
+      </p>
+     </div>
+     <div class="modal-footer" style="height: 69px;padding: 0;padding-right: 8px;">
+      <button class="btn btn-primary" onclick="rename_diagram();" type="button">
+       Save
+      </button>
+     </div>
+    </div>
+   </div>
+  </div>
+  <div class="offcanvas offcanvas-start" id="offcanvas-3" tabindex="-1">
+   <div class="offcanvas-header">
+    <h5 class="offcanvas-title">
+     Rename Diagram
+    </h5>
+    <button aria-label="Close" class="btn-close" data-bs-dismiss="offcanvas" type="button">
+    </button>
+   </div>
+   <div class="offcanvas-body">
+    <form>
+     <input class="btn btn-primary" type="submit"/>
+    </form>
+   </div>
+  </div>
   <div class="offcanvas offcanvas-start" id="offcanvas-2" tabindex="-1">
    <div class="offcanvas-header">
     <h5 class="offcanvas-title">
@@ -109,12 +146,14 @@
     </button>
    </div>
   </div>
-  <div class="container-fluid" style="padding: 0;">
-   <h5 class="text-center d-inline-flex float-start align-items-xl-center" id="diagram-name" style="position: absolute;float: left;margin: 8px;z-index: 1;max-width: 25%;height: auto;">
+  <div class="container d-inline-flex float-start d-lg-flex flex-row align-items-start flex-wrap justify-content-lg-center align-items-lg-center justify-content-xl-start editable-text" style="width: 20%;height: auto;position: absolute;">
+   <h5 id="diagram-name" style="display: block;text-align: center;z-index: 1;">
     {{ diagram_name }}
-    <button class="btn btn-primary d-xl-flex align-items-xl-center" style='background: url({% static "img/edit-icon.png" %}) no-repeat;background-size: cover;width: 32px;height: 32px;margin: 8px;' type="button">
-    </button>
    </h5>
+   <button class="btn btn-primary editable-text-button" data-bs-target="#diagram-name-modal" data-bs-toggle="modal" style='height: 32px;margin: 8px;width: 32px;background: url({% static "img/edit-icon.png" %}) -1px -1px / contain no-repeat, #00000000;z-index: 1;' type="button">
+   </button>
+  </div>
+  <div class="container-fluid" style="padding: 0;">
    <div class="d-grid d-xxl-flex justify-content-start align-items-start align-content-start align-self-start flex-wrap align-items-xxl-center" style="bottom: 2%;position: absolute;display: flex;overflow: visible;width: 100%;margin-left: 8px;z-index: 1;">
     <div class="btn-group" role="group">
      <button class="btn btn-primary" data-bs-target="#offcanvas-1" data-bs-toggle="offcanvas" type="button">
@@ -138,6 +177,9 @@
     saveDiagramURL = "{% url 'save_diagram' diagram_id %}";
     loadDiagramURL = "{% url 'load_diagram' diagram_id %}";
     quiverIframe = "#quiver-editor";
+    diagramId = "{{ diagram_id }}";
+    diagramName = "{{ diagram_name }}";
+    renameDiagramURL = "{% url 'rename_diagram' diagram_id %}";
     
     document.addEventListener('DOMContentLoaded', ()=> {
         load_diagram_from_database();        

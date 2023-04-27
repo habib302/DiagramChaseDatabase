@@ -217,6 +217,37 @@ def create_new_diagram(request):
 
 identity_regex = re.compile(r'\\text{id}_\{(?P<subscr>.+)\}|\\text\{id\}_(?P<subscr1>.)|\\text\{id\}')
 
+
+@login_required
+def rename_diagram(request, diagram_id):
+   try:
+      diagram = get_model_by_uid(Diagram, diagram_id)
+      
+      if diagram is None:
+         raise ObjectDoesNotExist(f'There exists no diagram with uid "{diagram_id}".') 
+
+      if diagram.checked_out_by != request.user.username:
+         raise OperationalError(
+               f'The diagram with id "{diagram_id}" is already checked out by {diagram.checked_out_by}')                
+
+      new_name = request.body.decode('utf-8')
+      
+      if len(new_name) > MAX_TEXT_LENGTH:
+         raise OperationalError(f'Length of string, {len(new_name)} is greater than {MAX_TEXT_LENGTH}')
+         
+      diagram.name = new_name
+      diagram.save()
+      
+      #messages.success(request, f'🌩️ Successfully renamed diagram in the database!')
+      response = { 'success' : True }
+
+   except Exception as e:
+      messages.error(request, f'😢 {full_qualname(e)}: {str(e)}')
+      response = { 'success': False }
+      
+   return JsonResponse(response)
+      
+
 @login_required
 def functor_diagram(request, diagram_id=None):
    try:

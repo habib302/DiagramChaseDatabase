@@ -5,6 +5,9 @@ var quiverIframe = null;
 var csrfToken = null;
 var saveDiagramURL = null;
 var loadDiagramURL = null;
+var diagramId = null;
+var diagramName = null;
+var renameDiagramURL = null;
 
 function save_diagram_to_database()
 {
@@ -19,7 +22,7 @@ function save_diagram_to_database()
         options,
         definitions,
     );
-    
+
     // `data` is the new URL.
     history.pushState({}, "", data);
 
@@ -28,8 +31,9 @@ function save_diagram_to_database()
 
 function post_json_to_url(url, data)
 {
-        // I couldn't get post_string_to_url to run without CSRF failure here.
-    fetch(url, 
+    var data = JSON.stringify(data);
+
+    return fetch(url,
     {
         headers: {
         'X-CSRFToken': csrfToken,
@@ -37,17 +41,14 @@ function post_json_to_url(url, data)
         "Content-Type": "application/json; charset=utf-8",
     },
     method: 'POST',
-    body: JSON.stringify(data),
+    body: data,
     mode: 'same-origin',
     })
     .then(response => response.json())
     .then(data => {
         //alert("Success: " + JSON.stringify(data));
         display_django_messages();
-    })
-    .catch(error => {
-        alert(error);
-        console.error('Error: ' + error);
+        return data;
     });
 }
 
@@ -64,13 +65,12 @@ function load_diagram_from_database()
         iframeURL = `${URL_prefix}?q=${btoa(unescape(encodeURIComponent(data)))}`;
         $(quiverIframe).attr('src', iframeURL);
         quiverLoadDiagram();
-        hide_quiver_grid();
     });
 }
 
 function get_json_from_url(url)
 {
-    return fetch(url, 
+    return fetch(url,
     {
         headers: {
             'Accept': 'text/plain; charset=utf8',
@@ -79,4 +79,28 @@ function get_json_from_url(url)
     });
 }
 
+function rename_diagram()
+{
+    var text = $('#diagram-name-input').val();
 
+    if (text != diagramName)
+    {
+        post_json_to_url(renameDiagramURL, text)
+        .then(
+            data => {
+                if (data != null && 'success' in data)
+                {
+                    if (data['success'])
+                    {
+                        $('#diagram-name-close-button').trigger('click');
+                        $('#diagram-name').text(text);
+                        $('#diagram-name-input').val(text);
+                        diagramName = text;
+                    }
+                    // else {
+                    //     // $('#diagram-name-input').val(diagramName);
+                    // }
+                }
+            });
+    }
+}

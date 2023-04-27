@@ -76,7 +76,7 @@
   <h1 class="text-center" style="margin-left: 14px;">
    {{user.username}}'s diagrams:
   </h1>
-  <div class="container d-flex flex-row flex-grow-1 flex-fill justify-content-center flex-wrap align-items-xl-start" style="width: 100%;height: auto;padding-left: 0px;margin: 0px;margin-left: 6px;margin-right: 0px;padding-right: 0px;max-width: 100%;margin-top: 16px;">
+  <div class="container d-flex flex-row flex-grow-1 flex-fill justify-content-start flex-wrap align-items-xl-start" style="width: 100%;height: auto;padding-left: 0px;margin: 0px;margin-left: 6px;margin-right: 0px;padding-right: 0px;max-width: 100%;margin-top: 16px;">
    {% for diagram in diagrams %}
    <a href="{% url 'diagram_editor' diagram.uid %}" style="margin: 12px;text-decoration: none;">
     <div class="card" style="border-radius: 12px;margin: 0px;border-width: 2px;border-color: var(--bs-info);width: 100%;height: auto;min-height: 300px;">
