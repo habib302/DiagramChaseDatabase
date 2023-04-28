@@ -59,12 +59,12 @@ function load_diagram_from_database()
         return response.text();
     })
     .then(data => {
-        //alert(data);
-        var iframeURL = $(quiverIframe).attr('src');
-        const URL_prefix = iframeURL.replace(/\?.*$/, "");
-        iframeURL = `${URL_prefix}?q=${btoa(unescape(encodeURIComponent(data)))}`;
-        $(quiverIframe).attr('src', iframeURL);
-        quiverLoadDiagram();
+        // alert(data);
+        //var iframeURL = $(quiverIframe).attr('src');
+        //const URL_prefix = iframeURL.replace(/\?.*$/, "");
+        //iframeURL = `${URL_prefix}?q=${btoa(unescape(encodeURIComponent(data)))}`;
+        //$(quiverIframe).attr('src', iframeURL);
+        quiverLoadDiagram(data);
     });
 }
 

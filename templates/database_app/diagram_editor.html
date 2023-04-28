@@ -71,22 +71,22 @@
   <div id="django-messages" style="z-index: 1;">
    {% autoescape off %}{% bootstrap_messages %}{% endautoescape %}
   </div>
-  <div class="modal fade editable-text-modal" id="diagram-name-modal" role="dialog" style="margin-top: 10%;" tabindex="-1">
+  <div class="modal fade editable-text-modal" id="diagram-name-modal" role="dialog" style="margin-top: 10%;border-color: var(--bs-indigo);" tabindex="-1">
    <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
-     <div class="modal-header" style="height: 46.4219px;">
-      <h4 class="modal-title">
-       Edit Text
+     <div class="modal-header flex-row flex-grow-1 flex-shrink-0 flex-fill justify-content-center align-items-center align-content-center align-self-stretch flex-wrap justify-content-xl-center align-items-xl-center" style="height: 46.4219px;border-style: none;background: #fcff68;text-align: center;padding-left: 0%;padding-right: 0%;margin: 0px;">
+      <h4 class="modal-title float-none" style="text-align: center;margin: 0;padding-right: 0px;padding-left: 0px;margin-left: 0px;margin-right: 10px;">
+       Rename Diagram
       </h4>
-      <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" id="diagram-name-close-button" type="button">
+      <button aria-label="Close" class="btn-close text-end" data-bs-dismiss="modal" id="diagram-name-close-button" style="margin: 8px;position: absolute;right: 0.4%;" type="button">
       </button>
      </div>
-     <div class="modal-body d-md-flex justify-content-md-center" style="padding: 0px;height: auto;width: auto;">
-      <input class="form-control-lg d-md-flex justify-content-md-center align-items-md-center" id="diagram-name-input" placeholder="Enter a diagram name" style="width: 90%;height: 100%;padding: 0px;margin: 0;margin-right: 5%;margin-bottom: 0;text-align: center;margin-left: 5%;background: rgba(201,255,132,0.48);" type="text" value="{{ diagram_name }}"/>
+     <div class="modal-body d-md-flex justify-content-md-center" style="padding: 0px;height: auto;width: auto;border-style: none;background: #fcff68;">
+      <input class="form-control-lg d-md-flex justify-content-md-center align-items-md-center" id="diagram-name-input" placeholder="Enter a diagram name" style="width: 90%;height: 100%;padding: 0px;margin: 0;margin-right: 5%;margin-bottom: 0;text-align: center;margin-left: 5%;background: var(--bs-modal-bg);margin-top: 16px;border-width: 2px;border-color: var(--bs-blue);color: var(--bs-blue);" type="text" value="{{ diagram_name }}"/>
       <p>
       </p>
      </div>
-     <div class="modal-footer" style="height: 69px;padding: 0;padding-right: 8px;">
+     <div class="modal-footer" style="height: 69px;padding: 0;padding-right: 8px;border-style: none;background: #fcff68;">
       <button class="btn btn-primary" onclick="rename_diagram();" type="button">
        Save
       </button>
@@ -147,7 +147,7 @@
    </div>
   </div>
   <div class="container d-inline-flex float-start d-lg-flex flex-row align-items-start flex-wrap justify-content-lg-center align-items-lg-center justify-content-xl-start editable-text" style="width: 20%;height: auto;position: absolute;">
-   <h5 id="diagram-name" style="display: block;text-align: center;z-index: 1;">
+   <h5 id="diagram-name" style="display: block;text-align: center;z-index: 1;color: #6100ff;">
     {{ diagram_name }}
    </h5>
    <button class="btn btn-primary editable-text-button" data-bs-target="#diagram-name-modal" data-bs-toggle="modal" style='height: 32px;margin: 8px;width: 32px;background: url({% static "img/edit-icon.png" %}) -1px -1px / contain no-repeat, #00000000;z-index: 1;' type="button">
