@@ -8,6 +8,22 @@ var loadDiagramURL = null;
 var diagramId = null;
 var diagramName = null;
 var renameDiagramURL = null;
+var reassignCategoryURL = null;
+var categoryName = null;
+
+const KaTeXOptions = {
+    delimiters: [
+        {left: "$$", right: "$$", display: true},
+        {left: "$", right: "$", display: false},
+    ],
+    throwOnError : false
+};
+
+// Set up page-wide KaTeX auto-render
+document.addEventListener("DOMContentLoaded", function() {
+    renderMathInElement(document.body, KaTeXOptions);
+});
+
 
 function save_diagram_to_database()
 {
@@ -93,14 +109,50 @@ function rename_diagram()
                     if (data['success'])
                     {
                         $('#diagram-name-close-button').trigger('click');
-                        $('#diagram-name').text(text);
-                        $('#diagram-name-input').val(text);
+                        var diagram_name = $('#diagram-name');
+                        diagram_name.text(text);
                         diagramName = text;
+                        renderMathInElement(document.body, KaTeXOptions);
+                        
                     }
                     // else {
                     //     // $('#diagram-name-input').val(diagramName);
                     // }
                 }
-            });
+            }
+        );
+    }
+    else 
+    {
+        $('#diagram-name-close-button').trigger('click');
+    }
+}
+
+function reassign_category()
+{
+    var text = $('#category-name-input').val();
+    
+    if (text != categoryName)
+    {
+        post_json_to_url(reassignCategoryURL, text)
+        .then(
+            data => {
+                if (data != null && 'success' in data)
+                {
+                    if (data['success'])
+                    {
+                        $('#category-name-close-button').trigger('click');
+                        var category_name = $('#category-name')
+                        category_name.text(text);
+                        categoryName = text;
+                        renderMathInElement(document.body, KaTeXOptions);                        
+                        
+                    }
+                }
+            }
+        );
+    }
+    else {
+        $('#category-name-close-button').trigger('click');
     }
 }

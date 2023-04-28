@@ -231,6 +231,8 @@ def rename_diagram(request, diagram_id):
                f'The diagram with id "{diagram_id}" is already checked out by {diagram.checked_out_by}')                
 
       new_name = request.body.decode('utf-8')
+      new_name = new_name[1:-1]        # Remove weirdly appearing quotes 
+      new_name = new_name.replace('\\\\', '\\')
       
       if len(new_name) > MAX_TEXT_LENGTH:
          raise OperationalError(f'Length of string, {len(new_name)} is greater than {MAX_TEXT_LENGTH}')
@@ -238,7 +240,7 @@ def rename_diagram(request, diagram_id):
       diagram.name = new_name
       diagram.save()
       
-      #messages.success(request, f'🌩️ Successfully renamed diagram in the database!')
+      messages.success(request, f'🤓️ Successfully renamed diagram in the database!')
       response = { 'success' : True }
 
    except Exception as e:
@@ -246,7 +248,41 @@ def rename_diagram(request, diagram_id):
       response = { 'success': False }
       
    return JsonResponse(response)
+
+
+@login_required
+def reassign_category(request, diagram_id):
+   try:
+      diagram = get_model_by_uid(Diagram, diagram_id)
       
+      if diagram is None:
+         raise ObjectDoesNotExist(f'There exists no diagram with uid "{diagram_id}".') 
+
+      if diagram.checked_out_by != request.user.username:
+         raise OperationalError(
+               f'The diagram with id "{diagram_id}" is already checked out by {diagram.checked_out_by}')                
+
+      new_category = request.body.decode('utf-8')
+      new_category = new_category[1:-1]      
+      new_category = new_category.replace('\\\\', '\\')
+
+      if len(new_category) > MAX_TEXT_LENGTH:
+         raise OperationalError(f'Length of string, {len(new_category)} is greater than {MAX_TEXT_LENGTH}')
+         
+      old_category = diagram.category.get()
+      new_category = get_unique(Category, name=new_category)
+      diagram.category.reconnect(old_category, new_category)
+      diagram.save()
+      
+      messages.success(request, f'🌌️ Successfully re-assigned the category of this diagram in the database!')
+      response = { 'success' : True }
+
+   except Exception as e:
+      messages.error(request, f'😢 {full_qualname(e)}: {str(e)}')
+      response = { 'success': False }
+      
+   return JsonResponse(response)
+
 
 @login_required
 def functor_diagram(request, diagram_id=None):

@@ -12,6 +12,9 @@
     <link rel="stylesheet" href="/assets/css/Editable-Text.css">
     <link rel="stylesheet" href="/assets/css/Navbar-Centered-Brand-Dark-icons.css">
     <link rel="stylesheet" href="/assets/css/styles.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.6/dist/katex.min.css" integrity="sha384-mXD7x5S50Ko38scHSnD4egvoExgMPbrseZorkbE49evAfv9nNcbrXJ8LLNsDgh9d" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.6/dist/katex.min.js" integrity="sha384-j/ZricySXBnNMJy9meJCtyXTKMhIJ42heyr7oAdxTDBy/CYA9hzpMo+YTNV5C+1X" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.6/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
 </head>
 
 <body style="background: var(--bs-body-bg);">
@@ -38,13 +41,34 @@
 <div id="django-messages" style="z-index: 1;">
     {% autoescape off %}{% bootstrap_messages %}{% endautoescape %}              
 </div>  
+    <div class="container d-inline-flex float-start d-lg-flex flex-row align-items-start flex-wrap justify-content-lg-center align-items-lg-center justify-content-xl-start align-items-xxl-center editable-text" style="width: 20%;height: auto;position: absolute;right: 0%;margin: 8px;">
+        <h5 style="z-index: 1;margin: 0;">Category:&nbsp;</h5>
+        <h5 id="category-name" style="display: block;text-align: center;z-index: 1;color: #6100ff;margin: 8px;">{{ category_name }}</h5><button class="btn btn-primary editable-text-button" type="button" style="height: 32px;margin: 8px;width: 32px;background: url(&quot;/assets/img/edit-icon.png&quot;) -1px -1px / contain no-repeat, #00000000;z-index: 1;" data-bs-target="#category-name-modal" data-bs-toggle="modal"></button>
+        <div class="modal fade editable-text-modal" role="dialog" tabindex="-1" id="category-name-modal" style="margin-top: 10%;border-color: var(--bs-indigo);">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header flex-row flex-grow-1 flex-shrink-0 flex-fill justify-content-center align-items-center align-content-center align-self-stretch flex-wrap justify-content-xl-center align-items-xl-center" style="height: 46.4219px;border-style: none;background: #fcff68;text-align: center;padding-left: 0%;padding-right: 0%;margin: 0px;">
+                        <h4 class="modal-title float-none" style="text-align: center;margin: 0;padding-right: 0px;padding-left: 0px;margin-left: 0px;margin-right: 10px;">Reassign Diagram's Category</h4><button class="btn-close text-end" id="category-name-close-button" type="button" aria-label="Close" data-bs-dismiss="modal" style="margin: 8px;position: absolute;right: 0.4%;"></button>
+                    </div>
+                    <div class="modal-body d-md-flex justify-content-md-center" style="padding: 0px;height: auto;width: auto;border-style: none;background: #fcff68;"><input class="form-control-lg d-md-flex justify-content-md-center align-items-md-center" type="text" id="category-name-input" style="width: 90%;height: 100%;padding: 0px;margin: 0;margin-right: 5%;margin-bottom: 0;text-align: center;margin-left: 5%;background: var(--bs-modal-bg);margin-top: 16px;color: var(--bs-blue);box-shadow: 0px 5px 20px 3px var(--bs-modal-border-color);border: 2px none var(--bs-blue);" placeholder="Enter a diagram name" value="{{ category_name }}">
+                        <p></p>
+                    </div>
+                    <div class="modal-footer" style="height: 69px;padding: 0;padding-right: 8px;border-style: none;background: #fcff68;"><button class="btn btn-primary" type="button" onclick="reassign_category();">Save</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container d-inline-flex float-start d-lg-flex flex-row align-items-start flex-wrap justify-content-lg-center align-items-lg-center justify-content-xl-start editable-text" style="width: 20%;height: auto;position: absolute;margin: 8px;">
+        <h5 style="z-index: 1;margin: 0;">Name:&nbsp;</h5>
+        <h5 id="diagram-name" style="display: block;text-align: center;z-index: 1;color: #6100ff;margin: 8px;">{{ diagram_name }}</h5><button class="btn btn-primary editable-text-button" type="button" style="height: 32px;margin: 8px;width: 32px;background: url(&quot;/assets/img/edit-icon.png&quot;) -1px -1px / contain no-repeat, #00000000;z-index: 1;" data-bs-target="#diagram-name-modal" data-bs-toggle="modal"></button>
+    </div>
     <div class="modal fade editable-text-modal" role="dialog" tabindex="-1" id="diagram-name-modal" style="margin-top: 10%;border-color: var(--bs-indigo);">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header flex-row flex-grow-1 flex-shrink-0 flex-fill justify-content-center align-items-center align-content-center align-self-stretch flex-wrap justify-content-xl-center align-items-xl-center" style="height: 46.4219px;border-style: none;background: #fcff68;text-align: center;padding-left: 0%;padding-right: 0%;margin: 0px;">
                     <h4 class="modal-title float-none" style="text-align: center;margin: 0;padding-right: 0px;padding-left: 0px;margin-left: 0px;margin-right: 10px;">Rename Diagram</h4><button class="btn-close text-end" id="diagram-name-close-button" type="button" aria-label="Close" data-bs-dismiss="modal" style="margin: 8px;position: absolute;right: 0.4%;"></button>
                 </div>
-                <div class="modal-body d-md-flex justify-content-md-center" style="padding: 0px;height: auto;width: auto;border-style: none;background: #fcff68;"><input class="form-control-lg d-md-flex justify-content-md-center align-items-md-center" type="text" id="diagram-name-input" style="width: 90%;height: 100%;padding: 0px;margin: 0;margin-right: 5%;margin-bottom: 0;text-align: center;margin-left: 5%;background: var(--bs-modal-bg);margin-top: 16px;border-width: 2px;border-color: var(--bs-blue);color: var(--bs-blue);" placeholder="Enter a diagram name" value="{{ diagram_name }}">
+                <div class="modal-body d-md-flex justify-content-md-center" style="padding: 0px;height: auto;width: auto;border-style: none;background: #fcff68;"><input class="form-control-lg d-md-flex justify-content-md-center align-items-md-center" type="text" id="diagram-name-input" style="width: 90%;height: 100%;padding: 0px;margin: 0;margin-right: 5%;margin-bottom: 0;text-align: center;margin-left: 5%;background: var(--bs-modal-bg);margin-top: 16px;color: var(--bs-blue);border: 2px none var(--bs-blue);box-shadow: 0px 5px 20px 3px var(--bs-modal-border-color);" placeholder="Enter a diagram name" value="{{ diagram_name }}">
                     <p></p>
                 </div>
                 <div class="modal-footer" style="height: 69px;padding: 0;padding-right: 8px;border-style: none;background: #fcff68;"><button class="btn btn-primary" type="button" onclick="rename_diagram();">Save</button></div>
@@ -77,9 +101,6 @@
             <p>Offcanvas Paragraph</p><button class="btn btn-primary" type="button" data-bs-dismiss="offcanvas">Close</button>
         </div>
     </div>
-    <div class="container d-inline-flex float-start d-lg-flex flex-row align-items-start flex-wrap justify-content-lg-center align-items-lg-center justify-content-xl-start editable-text" style="width: 20%;height: auto;position: absolute;">
-        <h5 id="diagram-name" style="display: block;text-align: center;z-index: 1;color: #6100ff;">{{ diagram_name }}</h5><button class="btn btn-primary editable-text-button" type="button" style="height: 32px;margin: 8px;width: 32px;background: url(&quot;/assets/img/edit-icon.png&quot;) -1px -1px / contain no-repeat, #00000000;z-index: 1;" data-bs-target="#diagram-name-modal" data-bs-toggle="modal"></button>
-    </div>
     <div class="container-fluid" style="padding: 0;">
         <div class="d-grid d-xxl-flex justify-content-start align-items-start align-content-start align-self-start flex-wrap align-items-xxl-center" style="bottom: 2%;position: absolute;display: flex;overflow: visible;width: 100%;margin-left: 8px;z-index: 1;">
             <div class="btn-group" role="group"><button class="btn btn-primary" type="button" data-bs-target="#offcanvas-1" data-bs-toggle="offcanvas">Math</button><button class="btn btn-primary" type="button" data-bs-target="#offcanvas-2" data-bs-toggle="offcanvas">Functor</button><button class="btn btn-primary" id="save-button" type="button" onclick="save_diagram_to_database();">Save</button></div>
@@ -95,6 +116,8 @@
     diagramId = "{{ diagram_id }}";
     diagramName = "{{ diagram_name }}";
     renameDiagramURL = "{% url 'rename_diagram' diagram_id %}";
+    reassignCategoryURL = "{% url 'reassign_category' diagram_id %}";
+    categoryName = "{{ category_name }}";
     
     document.addEventListener('DOMContentLoaded', ()=> {
         load_diagram_from_database();        

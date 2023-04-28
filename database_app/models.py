@@ -268,9 +268,7 @@ class Category(StructuredNode, Model):
     unique_fields = ['name']
     uid = UniqueIdProperty()
     name = StringProperty(max_length=MAX_TEXT_LENGTH, required=True)
-    objects = RelationshipTo('Object', 'CONTAINS')
-    of_categories = BooleanProperty(default=False)
-
+    
     @staticmethod
     def our_create(**kwargs):
         category = Category(**kwargs).save()
@@ -334,7 +332,7 @@ class Diagram(StructuredNode, Model):
     @staticmethod
     def our_create(**kwargs):
         diagram = Diagram(**kwargs).save()
-        category = get_unique(Category, name='Any')
+        category = get_unique(Category, name='Any category')
         diagram.category.connect(category)
         diagram.date_modified = diagram.date_created = datetime.now()
         diagram.save()  
@@ -506,6 +504,10 @@ class Diagram(StructuredNode, Model):
         query = query[:-5]   # Remove AND      
         
         return template_regexes, query
+    
+    @property
+    def category_name(self):
+        return self.category.get().name
     
     
 

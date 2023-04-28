@@ -51,4 +51,5 @@ urlpatterns = [
     path("embed_diagram/<str:diagram_id>", db_views.embed_diagram, name="embed_diagram"),
     path("functor_diagram/<str:diagram_id>", db_views.functor_diagram, name="functor_diagram"),
     path("rename_diagram/<str:diagram_id>", db_views.rename_diagram, name="rename_diagram"),
+    path("reassign_category/<str:diagram_id>", db_views.reassign_category, name="reassign_category"),
 ]
